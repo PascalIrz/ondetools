@@ -1,4 +1,3 @@
-
 #' Création de la variable Mois
 #'
 #' Création de la variable Mois en 2 caractères alphanumériques (+pratique pour les graphiques ultérieurs)
