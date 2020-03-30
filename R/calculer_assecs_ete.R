@@ -1,6 +1,6 @@
 #' Caractérisation des assecs
 #'
-#' Caractérisation des assecs. Comme le recours à des campagnes dites "complémentaires" varie largement
+#' Caractérisation de la fréquence des assecs. Comme le recours à des campagnes dites "complémentaires" varie largement
 #'     selon les régions et départements, pour que la caractérisation ait un sens, elle est restreinte
 #'     aux observations des mois d'été, donc des données des campagnes "usuelles".
 #'

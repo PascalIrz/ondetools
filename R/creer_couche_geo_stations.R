@@ -1,12 +1,13 @@
 #' Créer la couche géographique des stations
 #'
-#' Cette fonction crée un objet géographique à partir du fichier ONDE au format "long" et de ses colonnes de coordonnées
-#'     ("CoordXSiteHydro", "CoordYSiteHydro"). Le système de projection est Lambert 93.
+#' Cette fonction crée un objet géographique de classe `sf` à partir du fichier ONDE au format "long" et de
+#'     ses colonnes de coordonnées ("CoordXSiteHydro", "CoordYSiteHydro"). Le système de projection est
+#'     Lambert 93.
 #'
 #' @param onde_df Le dataframe contenant les données ONDE. NB les colonnes ne doivent pas avoir été renommées.
 #'
-#' @return La sortie est l'objet géographique de classe sf constitué des points correspondant à chacune des stations. Il comprend
-#'     autant de lignes qu'il y a de stations.
+#' @return La sortie est l'objet géographique de classe `sf` constitué des points correspondant à chacune des stations.
+#'     Il comprend autant de lignes qu'il y a de stations.
 #' @export
 #' @importFrom sf st_as_sf st_crs
 #' @importFrom dplyr select mutate

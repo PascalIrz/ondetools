@@ -1,6 +1,7 @@
 #' Création de la variable Mois
 #'
-#' Création de la variable Mois en 2 caractères alphanumériques (+pratique pour les graphiques ultérieurs)
+#' Création de la variable Mois en 2 caractères alphanumériques (01 à 12). Ce format est plus pratique pour les
+#'     graphiques ultérieurs qui nécessitent une variable catégorielle mais ordonnée.
 
 #'
 #' @param onde_df Le dataframe contenant les données ONDE, mis en forme en format "long".

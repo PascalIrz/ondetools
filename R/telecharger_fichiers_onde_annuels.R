@@ -5,7 +5,7 @@
 #'     indiquer l'année à laquelle chacun correspond. Les métadonnées (en pdf) sont stockées dans le
 #'     même répertoire.
 #'
-#' @param url La chaîne de caractères pour l'url où se trouvent les fichiers annuels à télécharger.
+#' @param url La chaîne de caractères indiquant l'url où se trouvent les fichiers annuels à télécharger.
 #' @param raw_data_dir La chaîne de caractère indiquant le chemin vers le répertoire où stocker les fichiers
 #'     bruts compressés + décompressés.
 #'

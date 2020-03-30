@@ -5,11 +5,11 @@
 #'     n'existe pas, la fonction le crée. Sinon, elle écrase son contenu antérieur. Au final, il y a un fichier
 #'     par station. L'exécution de la fonction prend environ une seconde par station.
 #'
-#' @param stations_geo La couche géographique des stations (format sf), contenant la variable "CdSiteHydro".
+#' @param stations_geo La couche géographique des stations (classe `sf`), contenant la variable "CdSiteHydro".
 #'     du fichier ONDE.
-#' @param liste_graphiques La liste contenant les graphiques. Elle est produite par la fonction
-#'     produire_graph_pour_toutes_les_stations().
-#' @param repertoire Chaîne de caractère correspondant au chemin vers le répertoire de stockage des fichiers png.
+#' @param liste_graphiques La liste contenant les graphiques, qui aura été auparavant produite par la
+#'     fonction produire_graph_pour_toutes_les_stations().
+#' @param repertoire Chaîne de caractère indiquant le chemin vers le répertoire de stockage des fichiers png.
 #'
 #' @return La fonction produit autant de fichiers png qu'il y a de stations.
 #' @export

@@ -1,10 +1,11 @@
 #' Assemblage des fichiers annuels
 #'
-#' Cette fonction permet d'assembler les fichiers csv issus de la fonction telecharger_fichiers_onde_annuels()
-#'     en un unique dataframe. La sortie est le dataframe national pour l'ensemble des années où la donnée
-#'     est disponible.
+#' Cette fonction permet d'assembler - en les empilant - les fichiers csv issus de la fonction
+#'     telecharger_fichiers_onde_annuels() en un unique dataframe. La sortie est le dataframe national
+#'     pour l'ensemble des années où la donnée est disponible.
 #'
-#' @param annual_onde_files_dir Chemin vers me répertoire où se trouvent les fichiers annuels
+#' @param annual_onde_files_dir Chaîne de caractères indiquant le chemin vers le répertoire où se trouvent
+#'     les fichiers annuels
 #'
 #' @return Dataframe national pour l'ensemble des années de données disponibles
 #' @export

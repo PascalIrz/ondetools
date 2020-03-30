@@ -4,7 +4,7 @@
 #'     d'étiage, cette fonction ajoute à un tableau de données ONDE, qui ne comprend que des données
 #'     d'observations, tous les mois pour lesquels il n'y a pas eu d'observations. Le tableau de sortie
 #'     comprend donc un nombre de lignes qui est le produit de nombre de stations par le nombre
-#'     d'années d'observations par 12 mois : 12 x nb_années x nb_stations
+#'     d'années d'observations par 12 mois : 12 x nb_années x nb_stations.
 #'
 #' @param onde_df Le dataframe contenant les données ONDE en format "long".
 #' @param stations Le vecteur (caractère) des identifiants des stations au sens du champ "CdSiteHydro" de la base ONDE.
