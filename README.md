@@ -15,3 +15,8 @@ Il propose un ensemble de fonctions qui permettent de :
 - visualiser graphiquement le “tableau de bord” de chacune des stations
 - exporter ces graphiques au format .bmp
 - visualiser les données en cartographie dynamique
+
+# Documentation
+
+Chaque fonction est accompagnée d'une aide.
+Une vignette html donne une vue d'ensemble de la chaîne de traitements "type".
