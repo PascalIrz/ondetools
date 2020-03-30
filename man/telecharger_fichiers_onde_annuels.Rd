@@ -11,7 +11,7 @@ telecharger_fichiers_onde_annuels(
 )
 }
 \arguments{
-\item{url}{La chaîne de caractères pour l'url où se trouvent les fichiers annuels à télécharger.}
+\item{url}{La chaîne de caractères indiquant l'url où se trouvent les fichiers annuels à télécharger.}
 
 \item{raw_data_dir}{La chaîne de caractère indiquant le chemin vers le répertoire où stocker les fichiers
 bruts compressés + décompressés.}

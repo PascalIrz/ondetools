@@ -10,12 +10,13 @@ creer_couche_geo_stations(onde_df)
 \item{onde_df}{Le dataframe contenant les données ONDE. NB les colonnes ne doivent pas avoir été renommées.}
 }
 \value{
-La sortie est l'objet géographique de classe sf constitué des points correspondant à chacune des stations. Il comprend
-    autant de lignes qu'il y a de stations.
+La sortie est l'objet géographique de classe `sf` constitué des points correspondant à chacune des stations.
+    Il comprend autant de lignes qu'il y a de stations.
 }
 \description{
-Cette fonction crée un objet géographique à partir du fichier ONDE au format "long" et de ses colonnes de coordonnées
-    ("CoordXSiteHydro", "CoordYSiteHydro"). Le système de projection est Lambert 93.
+Cette fonction crée un objet géographique de classe `sf` à partir du fichier ONDE au format "long" et de
+    ses colonnes de coordonnées ("CoordXSiteHydro", "CoordYSiteHydro"). Le système de projection est
+    Lambert 93.
 }
 \examples{
 \dontrun{

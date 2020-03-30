@@ -7,13 +7,13 @@
 exporter_les_graphiques_png(stations_geo, liste_graphiques, repertoire)
 }
 \arguments{
-\item{stations_geo}{La couche géographique des stations (format sf), contenant la variable "CdSiteHydro".
+\item{stations_geo}{La couche géographique des stations (classe `sf`), contenant la variable "CdSiteHydro".
 du fichier ONDE.}
 
-\item{liste_graphiques}{La liste contenant les graphiques. Elle est produite par la fonction
-produire_graph_pour_toutes_les_stations().}
+\item{liste_graphiques}{La liste contenant les graphiques, qui aura été auparavant produite par la
+fonction produire_graph_pour_toutes_les_stations().}
 
-\item{repertoire}{Chaîne de caractère correspondant au chemin vers le répertoire de stockage des fichiers png.}
+\item{repertoire}{Chaîne de caractère indiquant le chemin vers le répertoire de stockage des fichiers png.}
 }
 \value{
 La fonction produit autant de fichiers png qu'il y a de stations.

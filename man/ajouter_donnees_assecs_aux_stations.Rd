@@ -16,8 +16,9 @@ La fonction renvoit l'objet géographique points des stations auquel ont été a
     d'assecs.
 }
 \description{
-Cette fonction permet d'ajouter au fichier géographique des stations les attributs caractérisant les assecs.
-    La correspondance se fait par une jointure sur les codes des stations CdSiteHydro.
+Cette fonction permet d'ajouter à l'objet géographique (classe `sf` points) des stations les attributs
+    caractérisant les assecs. #'     La correspondance se fait par une jointure sur les codes des
+    stations CdSiteHydro.
 }
 \examples{
 
