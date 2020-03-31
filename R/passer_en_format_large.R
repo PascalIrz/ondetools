@@ -10,7 +10,7 @@
 #' @export
 #' @importFrom magrittr %>%
 #' @importFrom dplyr mutate select
-#' @importFrom tidyr pivot_wider
+#' @importFrom tidyr spread
 #'
 #' @examples \dontrun{
 #' onde_lb_large <- passer_en_format_large(onde_df_long = onde)}
@@ -20,7 +20,7 @@ passer_en_format_large <- function(onde_df_long) {
   onde_df_large <- onde_df_long %>%
     mutate(annee_mois = paste(Annee, Mois, sep = '_')) %>%
     select(-Annee, -Mois) %>%
-    pivot_wider(names_from = annee_mois, values_from = RsObservationNat) %>%
+    spread(key = annee_mois, value = RsObservationNat) %>%
     select(sort(names(.))) %>%
     select(CdSiteHydro, LbSiteHydro, NomEntiteHydrographique, CdTronconHydrographique, LbCommune, CdCommune, CdDepartement, LbRegion,
            NomCircAdminBassin, CoordXSiteHydro, CoordYSiteHydro, ProjCoordSiteHydro, everything())

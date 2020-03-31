@@ -38,7 +38,7 @@ exporter_les_graphiques_png <- function(stations_geo, liste_graphiques, repertoi
 
   # enregistrement d'un fichier png par graphique avec le nom qui va bien
   # (adapté de https://r4ds.had.co.nz/iteration.html#walk)
-  pwalk(list(noms_graphiques, liste_graphiques), ggsave, path = repertoire, overwrite = TRUE)
+  pwalk(list(noms_graphiques, liste_graphiques), ggsave, path = repertoire)
 
 
 }

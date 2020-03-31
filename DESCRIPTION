@@ -22,6 +22,7 @@ Imports: data.table,
     sf,
     stringr,
     tidyr,
+    tidyverse,
     utils,
     xml2 
 Encoding: UTF-8
