@@ -4,7 +4,10 @@
 .Ruserdata
 .csv
 .zip
+<<<<<<< HEAD
 inst/doc
 Meta
 raw_data
 doc
+=======
+>>>>>>> 9b0853055ed07e403cd47755fc227dc0b5bb72fc
