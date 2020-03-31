@@ -25,9 +25,8 @@ list.files("raw_data/fichiers_onde_annuels_zippes")
 ## ----assemblage, eval = TRUE--------------------------------------------------
 onde <- assembler_fichiers_onde_annuels_csv(annual_onde_files_dir = "raw_data/fichiers_onde_annuels_zippes")
 
-## ----eval = FALSE, echo = FALSE-----------------------------------------------
-#  load(file = 'onde_bretagne_2019.RData')
-#  onde <- onde_bretagne_2019
+## ----suppressionRawData, eval = FALSE, echo = FALSE---------------------------
+#  unlink("raw_data/fichiers_onde_annuels_zippes", recursive = TRUE)
 
 ## -----------------------------------------------------------------------------
 dim(onde)
@@ -59,47 +58,10 @@ onde_lb_large <- passer_en_format_large(onde_df_long = onde)
 #  write_excel_csv2(x = onde_lb_large, path = 'processed_data/onde_large.csv')
 
 ## -----------------------------------------------------------------------------
-gdata::keep(onde, sure = TRUE)
-
-## -----------------------------------------------------------------------------
 stations_onde_geo <- creer_couche_geo_stations(onde_df = onde)
 
 ## -----------------------------------------------------------------------------
 ggplot(data = stations_onde_geo) + geom_sf()
-
-## ----eval = FALSE-------------------------------------------------------------
-#  chemin <- "//svfcvin2/DFS/COMMUNS/REGIONS/BRE/DR/dr35_IG_metier/CATALOGUE/EAU/GESTION_TERRITOIRE/SAGE/sage_2016_DIR2_shp.shp"
-#  sages <- lire_couche_sages(fichier_shp = couche_sage, scr = 2154)
-
-## ----echo = FALSE-------------------------------------------------------------
-couche_sage <- 'D:/Pascal/boulot/onde/donnees_geographiques_reference/sage_2016_DIR2_shp.shp'
-sages <- lire_couche_sages(fichier_shp = couche_sage, scr = 2154)
-
-## -----------------------------------------------------------------------------
-ggplot(data = sages) + geom_sf()
-
-## -----------------------------------------------------------------------------
-stations_onde_geo <- st_join(x = stations_onde_geo, y = sages)
-
-## ----doublons, eval = FALSE, fig.height = 6, fig.width = 10, align = "center"----
-#  doublons <- stations_onde_geo$CdSiteHydro %>%
-#    table %>%
-#    as.data.frame() %>%
-#    filter(Freq > 1) %>%
-#    .[,1] %>%
-#    as.character()
-#  
-#  doublons_geo <- stations_onde_geo %>%
-#    filter(CdSiteHydro %in% doublons)
-#  
-#  mapview(stations_onde_geo, viewer.suppress = FALSE, legend = FALSE) +
-#    mapview(sages, zcol = "NOM", alpha = 0.1, legend = FALSE) +
-#    mapview(doublons_geo, color = "red", legend = FALSE)
-
-## -----------------------------------------------------------------------------
-stations_onde_geo <- stations_onde_geo %>%
-  filter(!(CdSiteHydro == "J3104013" & NOM == "Bas Léon")) %>%
-  filter(!(is.na(NOM) & (LbRegion %in% c("Bretagne", "PdL") == FALSE)))
 
 ## -----------------------------------------------------------------------------
 assecs <- calculer_assecs_ete(onde_df = onde)
@@ -108,13 +70,11 @@ assecs <- calculer_assecs_ete(onde_df = onde)
 stations_onde_geo <- ajouter_donnees_assecs_aux_stations(stations_geo = stations_onde_geo,
                                                          assecs_df = assecs)
 
-## ----eval = FALSE-------------------------------------------------------------
-#  stations_onde_geo <- stations_onde_geo %>%
-#    st_transform(crs = 27572)
+## ----eval = TRUE--------------------------------------------------------------
+stations_onde_geo <- stations_onde_geo %>%
+  st_transform(crs = 27572)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  mapview(sages, zcol = "NOM", alpha.regions = 0.3,
-#          viewer.suppress = TRUE, legend = FALSE) +
 #    mapview(stations_onde_geo, cex = "taille_point",
 #            layer.name = "Assecs", label = "Station ONDE",
 #            col.regions = "red")
@@ -161,7 +121,6 @@ mapviewOptions(basemaps = c("OpenStreetMap", "OpenTopoMap",
 # mapviewOptions(default = TRUE) permettrait de revenir au paramétrage par défaut
 
 
-produire_carte_dynamique (couche_sages = sages,
-                          couche_stations = stations_onde_geo,
+produire_carte_dynamique (couche_stations = stations_onde_geo,
                           popups_stations = graphiques)
 
