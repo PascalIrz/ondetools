@@ -82,7 +82,7 @@ onde <- assembler_fichiers_onde_annuels_csv(annual_onde_files_dir = "raw_data/fi
 ```
 
 
-```{r suppressionRawData, eval = FALSE, echo = FALSE}
+```{r suppressionRawData, eval = TRUE, echo = FALSE}
 unlink("raw_data/fichiers_onde_annuels_zippes", recursive = TRUE)
 ```
 

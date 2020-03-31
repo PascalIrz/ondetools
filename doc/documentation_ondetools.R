@@ -25,8 +25,8 @@ list.files("raw_data/fichiers_onde_annuels_zippes")
 ## ----assemblage, eval = TRUE--------------------------------------------------
 onde <- assembler_fichiers_onde_annuels_csv(annual_onde_files_dir = "raw_data/fichiers_onde_annuels_zippes")
 
-## ----suppressionRawData, eval = FALSE, echo = FALSE---------------------------
-#  unlink("raw_data/fichiers_onde_annuels_zippes", recursive = TRUE)
+## ----suppressionRawData, eval = TRUE, echo = FALSE----------------------------
+unlink("raw_data/fichiers_onde_annuels_zippes", recursive = TRUE)
 
 ## -----------------------------------------------------------------------------
 dim(onde)

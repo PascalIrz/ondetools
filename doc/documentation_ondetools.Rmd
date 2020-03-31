@@ -82,7 +82,7 @@ onde <- assembler_fichiers_onde_annuels_csv(annual_onde_files_dir = "raw_data/fi
 ```
 
 
-```{r suppressionRawData, eval = FALSE, echo = FALSE}
+```{r suppressionRawData, eval = TRUE, echo = FALSE}
 unlink("raw_data/fichiers_onde_annuels_zippes", recursive = TRUE)
 ```
 
@@ -114,7 +114,7 @@ onde <- onde %>%
   filter(TRUE)
 ```
 
-## filtrage sur le périmètre géographique
+## Filtrage sur le périmètre géographique
 
 Il existe plusieurs variables correspondants aux départements, régions, districts hydrographiques qui permettent de filtrer simplement. Ici, nous nous intéressons aux régions Bretagne et Pays-de-la-Loire.
 
@@ -139,7 +139,7 @@ Pour certains usages comme la visualisation des observations d'un mois donné (e
 onde_lb_large <- passer_en_format_large(onde_df_long = onde)
 ```
 
-## exportation en format CSV
+## Exportation en format CSV
 
 On peut à ce stade exporter les tableaux de données en format texte directement lisible par Excel dans un répertoire "processed_data".
 
@@ -191,7 +191,7 @@ stations_onde_geo <- stations_onde_geo %>%
   st_transform(crs = 27572)
 ```
 
-## vérification visuelle
+## Vérification visuelle
 
 Si l'on veut vérifier la cohérence des étapes précédentes, on peut visualiser les objets.
 

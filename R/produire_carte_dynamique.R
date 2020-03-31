@@ -29,12 +29,15 @@ produire_carte_dynamique <- function(couche_stations, popups_stations, couche_sa
   carte2 <- if(is.na(couche_sages)) {
 
     mapview(couche_stations, cex = "pourcentage_assecs", layer.name = "Assecs", legend = FALSE,
-            popup = leafpop::popupGraph(popups_stations), viewer.suppress = TRUE)
+            popup = leafpop::popupGraph(popups_stations), viewer.suppress = TRUE,
+            col.regions = "red")
+
     } else {
 
     mapview(couche_stations, cex = "pourcentage_assecs", layer.name = "Assecs", legend = FALSE,
-                         popup = leafpop::popupGraph(popups_stations))
-            }
+            popup = leafpop::popupGraph(popups_stations), col.regions = "red")
+
+           }
 
   ma_carte <- if(is.na(carte1)) {carte2} else {carte1 + carte2}
 
