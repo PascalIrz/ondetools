@@ -1,6 +1,9 @@
-# ondetools
+<div align="right"><img src="http://kamoke.fr/wp-content/uploads/2020/04/hex_ondetools_logo.png"></div align="right">
 
-Le package `ondetools` vise à faciliter le chargement et l'exploitation des données de [l'observatoire des étiages](https://www.data.gouv.fr/fr/datasets/observatoire-national-des-etiages/). Ces données sont téléchargeables depuis [l'url suivante](https://onde.eaufrance.fr/content/t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e). Elles couvrent la France métropolitaine depuis 2012.
+# {ondetools}
+
+
+Le package {ondetools} vise à faciliter le chargement et l'exploitation des données de [l'observatoire des étiages](https://www.data.gouv.fr/fr/datasets/observatoire-national-des-etiages/). Ces données sont [mises à disposition en ligne](https://onde.eaufrance.fr/content/t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e). Elles couvrent la France métropolitaine depuis 2012.
 
 La logique suivie est celle d’une chaîne de traitements depuis le téléchargement des données brutes sur le web jusqu’à la visualisation cartographique.
 
@@ -19,4 +22,6 @@ Il propose un ensemble de fonctions qui permettent de :
 # Documentation
 
 Chaque fonction est accompagnée d'une aide.
-Une vignette html donne une vue d'ensemble de la chaîne de traitements "type".
+
+Une documentation donne une vue d'ensemble de la chaîne de traitements "type".
+

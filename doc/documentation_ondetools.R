@@ -114,7 +114,7 @@ graphiques[10:12]
 #                              liste_graphiques = graphiques,
 #                              repertoire = 'processed_data/graphiques')
 
-## ----cartoDynamique, fig.height = 7, fig.width = 11, align = "center", warning=FALSE----
+## ----cartoDynamique, fig.height = 7, fig.width = 8, align = "center", warning=FALSE----
 
 mapviewOptions(basemaps = c("OpenStreetMap", "OpenTopoMap", 
                             "Esri.WorldShadedRelief", "Esri.WorldImagery")) 
