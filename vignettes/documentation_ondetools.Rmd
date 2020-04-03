@@ -61,8 +61,11 @@ Chaque fonction est accompagnée d'un fichier d'aide. Exemple :
 
 Le stockage par défaut de ces fichiers est dans un sous-répertoire du répertoire de travail `"raw_data/fichiers_onde_annuels_zippes"`.
 
-```{r telechargemement, eval = TRUE}
-url_onde <- "https://onde.eaufrance.fr/content/t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e"
+```{r telechargemement, eval = TRUE, warning = FALSE}
+
+url_onde <- paste0("https://onde.eaufrance.fr/content/",
+"t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e")
+
 telecharger_fichiers_onde_annuels(url = url_onde, raw_data_dir = 'raw_data')
 ```
 
@@ -81,8 +84,9 @@ Il s'agit d'empiler les fichiers annuels.
 onde <- assembler_fichiers_onde_annuels_csv(annual_onde_files_dir = "raw_data/fichiers_onde_annuels_zippes")
 ```
 
+Si l'on souhaite supprimer le répertoire contenant les fichiers téléchargés :
 
-```{r suppressionRawData, eval = TRUE, echo = FALSE}
+```{r suppressionRawData, eval = TRUE, echo = TRUE}
 unlink("raw_data/fichiers_onde_annuels_zippes", recursive = TRUE)
 ```
 
@@ -106,12 +110,14 @@ str(onde)
 Entre le début et la fin de la série, certaines régions ont été regroupées. Pour avoir une cohérence d'ensemble du jeu de données, la variable `LbRegion` est recodée pour se conformer au découpage régional en 2020. Une variable `Mois` est créée à partir de la date d'observation. Pour un usage graphique ultérieur, elle est en format texte à 2 caractères. 
 
 ```{r gestionMois}
-onde <- onde %>%
-  gerer_codes_region() %>%
-  mutate(Mois = lubridate::ymd(DtRealObservation) %>%
-           lubridate::month() %>%
-           str_pad(width = 2, side = "left", pad = "0")) %>%
+
+onde <- gerer_codes_region(onde)
+
+onde <- mutate(onde, Mois = lubridate::ymd(DtRealObservation),
+               Mois = lubridate::month(Mois),
+               Mois = str_pad(Mois, width = 2, side = "left", pad = "0")) %>%
   filter(TRUE)
+
 ```
 
 ## Filtrage sur le périmètre géographique
@@ -119,8 +125,9 @@ onde <- onde %>%
 Il existe plusieurs variables correspondants aux départements, régions, districts hydrographiques qui permettent de filtrer simplement. Ici, nous nous intéressons aux régions Bretagne et Pays-de-la-Loire.
 
 ```{r}
-onde <- onde %>%
-  filter(LbRegion %in% c("Bretagne", "PdL"))
+
+onde <- filter(onde, LbRegion %in% c("Bretagne", "PdL"))
+
 ```
 
 ## Gestion des campagnes
@@ -187,8 +194,7 @@ stations_onde_geo <- ajouter_donnees_assecs_aux_stations(stations_geo = stations
 Si nécessaire, on peut reprojeter en WGS84 - le système utilisé par `OpenStreetMap` ou `GoogleMaps`.
 
 ```{r eval = TRUE}
-stations_onde_geo <- stations_onde_geo %>%
-  st_transform(crs = 27572)
+stations_onde_geo <- st_transform(stations_onde_geo, crs = 27572)
 ```
 
 ## Vérification visuelle
@@ -196,9 +202,9 @@ stations_onde_geo <- stations_onde_geo %>%
 Si l'on veut vérifier la cohérence des étapes précédentes, on peut visualiser les objets.
 
 ```{r eval = FALSE}
-  mapview(stations_onde_geo, cex = "taille_point",
-          layer.name = "Assecs", label = "Station ONDE",
-          col.regions = "red")
+mapview(stations_onde_geo, cex = "taille_point",
+        layer.name = "Assecs", label = "Station ONDE",
+        col.regions = "red")
 
 ```
 
@@ -221,9 +227,7 @@ mes_couleurs <- c("Ecoulement\nvisible" = "blue",
 Pour les besoins de la représentation graphique, on complète le fichier avec des NA (données manquantes) pour les mois sans observations. La fonction `completer_observations_mois_manquants` est alors utile.
 
 ```{r}
-codes_stations <- stations_onde_geo %>%
-  pull(CdSiteHydro) %>%
-  unique()
+codes_stations <- unique(pull(stations_onde_geo, CdSiteHydro))
 
 onde_ts_mois <- completer_observations_mois_manquants(onde_df = onde,
                                                       stations = codes_stations)
@@ -232,7 +236,8 @@ onde_ts_mois <- completer_observations_mois_manquants(onde_df = onde,
 ## Essai de la fonction graphique
 
 ```{r graphUneStation, fig.height = 5, fig.width = 6, align = "center"}
-ma_station <- onde %>% pull(CdSiteHydro) %>% .[3689] #Q choix d'une station au pif
+ma_station <- pull(onde, CdSiteHydro)
+ma_station <- ma_station[3689]
 
 produire_graph_pour_une_station(code_station = ma_station, onde_df = onde_ts_mois, couleurs = mes_couleurs)
 ```

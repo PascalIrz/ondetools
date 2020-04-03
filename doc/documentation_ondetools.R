@@ -15,8 +15,11 @@ library(mapview)
 ## ----exemple1, eval = FALSE---------------------------------------------------
 #  ?calculer_assecs_ete()
 
-## ----telechargemement, eval = TRUE--------------------------------------------
-url_onde <- "https://onde.eaufrance.fr/content/t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e"
+## ----telechargemement, eval = TRUE, warning = FALSE---------------------------
+
+url_onde <- paste0("https://onde.eaufrance.fr/content/",
+"t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e")
+
 telecharger_fichiers_onde_annuels(url = url_onde, raw_data_dir = 'raw_data')
 
 ## ---- eval = TRUE-------------------------------------------------------------
@@ -25,7 +28,7 @@ list.files("raw_data/fichiers_onde_annuels_zippes")
 ## ----assemblage, eval = TRUE--------------------------------------------------
 onde <- assembler_fichiers_onde_annuels_csv(annual_onde_files_dir = "raw_data/fichiers_onde_annuels_zippes")
 
-## ----suppressionRawData, eval = TRUE, echo = FALSE----------------------------
+## ----suppressionRawData, eval = TRUE, echo = TRUE-----------------------------
 unlink("raw_data/fichiers_onde_annuels_zippes", recursive = TRUE)
 
 ## -----------------------------------------------------------------------------
@@ -35,16 +38,18 @@ dim(onde)
 str(onde)
 
 ## ----gestionMois--------------------------------------------------------------
-onde <- onde %>%
-  gerer_codes_region() %>%
+
+onde <- gerer_codes_region(onde) %>%
   mutate(Mois = lubridate::ymd(DtRealObservation) %>%
            lubridate::month() %>%
            str_pad(width = 2, side = "left", pad = "0")) %>%
   filter(TRUE)
 
+
 ## -----------------------------------------------------------------------------
-onde <- onde %>%
-  filter(LbRegion %in% c("Bretagne", "PdL"))
+
+onde <- filter(onde, LbRegion %in% c("Bretagne", "PdL"))
+
 
 ## ----gererCampagnes-----------------------------------------------------------
 onde <- gerer_les_campagnes(onde_df = onde)
@@ -71,8 +76,7 @@ stations_onde_geo <- ajouter_donnees_assecs_aux_stations(stations_geo = stations
                                                          assecs_df = assecs)
 
 ## ----eval = TRUE--------------------------------------------------------------
-stations_onde_geo <- stations_onde_geo %>%
-  st_transform(crs = 27572)
+stations_onde_geo <- st_transform(stations_onde_geo, crs = 27572)
 
 ## ----eval = FALSE-------------------------------------------------------------
 #    mapview(stations_onde_geo, cex = "taille_point",
@@ -88,15 +92,15 @@ mes_couleurs <- c("Ecoulement\nvisible" = "blue",
           "NA" = "grey")
 
 ## -----------------------------------------------------------------------------
-codes_stations <- stations_onde_geo %>%
-  pull(CdSiteHydro) %>%
+codes_stations <- pull(stations_onde_geo, CdSiteHydro) %>%
   unique()
 
 onde_ts_mois <- completer_observations_mois_manquants(onde_df = onde,
                                                       stations = codes_stations)
 
 ## ----graphUneStation, fig.height = 5, fig.width = 6, align = "center"---------
-ma_station <- onde %>% pull(CdSiteHydro) %>% .[3689] #Q choix d'une station au pif
+ma_station <- pull(onde, CdSiteHydro)
+ma_station <- ma_station[3689]
 
 produire_graph_pour_une_station(code_station = ma_station, onde_df = onde_ts_mois, couleurs = mes_couleurs)
 
