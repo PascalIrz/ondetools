@@ -10,7 +10,7 @@
 #' @return Dataframe national pour l'ensemble des années de données disponibles
 #' @export
 #' @importFrom magrittr %>%
-#' @importFrom purrr map_df
+#' @importFrom purrr map reduce
 #' @importFrom data.table fread
 #' @importFrom stringr str_replace_all
 #'
@@ -22,8 +22,10 @@ assembler_fichiers_onde_annuels_csv <- function(annual_onde_files_dir) {
   csv_files <- list.files(path = annual_onde_files_dir, pattern = "*.csv")
 
   # ces fichiers sont lus puis "empilés"
-  onde <- purrr::map_df(paste(annual_onde_files_dir, csv_files, sep = '/'),
-                        data.table::fread, encoding = "UTF-8")
+  # utilisation de rbind qui est plus tout-terrain que map() %>% bind_rows() ou mp_df()
+  onde <- purrr::map(paste(annual_onde_files_dir, csv_files, sep = '/'),
+                     data.table::fread, encoding = "UTF-8", colClasses = c(CdCommune = "character")) %>% 
+    reduce(rbind)
 
   # renommage des variables pour enlever les caractères < et >
   names(onde) <- names(onde) %>%

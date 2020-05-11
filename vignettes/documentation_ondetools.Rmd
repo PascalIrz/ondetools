@@ -7,12 +7,15 @@ vignette: >
   %\VignetteIndexEntry{documentation_ondetools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  echo = TRUE,
+  eval = TRUE
 )
 ```
 
@@ -57,15 +60,16 @@ Chaque fonction est accompagnée d'un fichier d'aide. Exemple :
 
 # Chargement et mise en forme des données tabulées
 
-## Téléchargement des fichiers et stockage
+## Téléchargement et stockage des fichiers 
 
-Le stockage par défaut de ces fichiers est dans un sous-répertoire du répertoire de travail `"raw_data/fichiers_onde_annuels_zippes"`.
+Le stockage par défaut de ces fichiers est dans un sous-répertoire du répertoire de travail "raw_data/fichiers_onde_annuels_zippes".
 
 ```{r telechargemement, eval = TRUE, warning = FALSE}
-
 url_onde <- paste0("https://onde.eaufrance.fr/content/",
-"t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e")
+                   "t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e")
+```
 
+```{r, eval = TRUE, warning = FALSE}
 telecharger_fichiers_onde_annuels(url = url_onde, raw_data_dir = 'raw_data')
 ```
 
@@ -224,7 +228,7 @@ mes_couleurs <- c("Ecoulement\nvisible" = "blue",
           "NA" = "grey")
 ```
 
-Pour les besoins de la représentation graphique, on complète le fichier avec des NA (données manquantes) pour les mois sans observations. La fonction `completer_observations_mois_manquants` est alors utile.
+Pour les besoins de la représentation graphique, on complète le fichier avec des NA (données manquantes) pour les mois sans observations. La fonction `completer_observations_mois_manquants()` est alors utile.
 
 ```{r}
 codes_stations <- unique(pull(stations_onde_geo, CdSiteHydro))

@@ -1,7 +1,9 @@
 ## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  echo = TRUE,
+  eval = TRUE
 )
 
 ## ----packages, message = FALSE------------------------------------------------
@@ -19,7 +21,7 @@ library(mapview)
 url_onde <- paste0("https://onde.eaufrance.fr/content/",
                    "t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e")
 
-## ---- eval = TRUE, warning = TRUE---------------------------------------------
+## ---- eval = TRUE, warning = FALSE--------------------------------------------
 telecharger_fichiers_onde_annuels(url = url_onde, raw_data_dir = 'raw_data')
 
 ## ---- eval = TRUE-------------------------------------------------------------
