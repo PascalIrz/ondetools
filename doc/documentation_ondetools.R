@@ -1,25 +1,34 @@
 ## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  echo = TRUE,
+  eval = TRUE
 )
 
 ## ----packages, message = FALSE------------------------------------------------
 library(ondetools)
 
-# autres packages nécessaire pour exécuter les lignes de code ci-dessous
-library(tidyverse)
-library(sf) 
-library(mapview)
+## ---- eval = FALSE------------------------------------------------------------
+#  # Téléchargement
+#  install.packages(c("DT", "lubridate", "mapview", "sf", "tidyverse"))
 
-## ----exemple1, eval = FALSE---------------------------------------------------
+## ---- eval = TRUE-------------------------------------------------------------
+# Activation
+library(DT)
+library(lubridate)
+library(mapview)
+library(sf) 
+library(tidyverse)
+
+## ----exemple1, eval = FALSE, echo = TRUE--------------------------------------
 #  ?calculer_assecs_ete()
 
 ## ----telechargemement, eval = TRUE, warning = FALSE---------------------------
 url_onde <- paste0("https://onde.eaufrance.fr/content/",
                    "t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e")
 
-## ---- eval = TRUE, warning = TRUE---------------------------------------------
+## ---- eval = TRUE, warning = FALSE--------------------------------------------
 telecharger_fichiers_onde_annuels(url = url_onde, raw_data_dir = 'raw_data')
 
 ## ---- eval = TRUE-------------------------------------------------------------
@@ -39,8 +48,6 @@ str(onde)
 
 ## ----gestionMois--------------------------------------------------------------
 
-onde <- gerer_codes_region(onde)
-
 onde <- mutate(onde, Mois = lubridate::ymd(DtRealObservation),
                Mois = lubridate::month(Mois),
                Mois = str_pad(Mois, width = 2, side = "left", pad = "0")) %>%
@@ -48,9 +55,8 @@ onde <- mutate(onde, Mois = lubridate::ymd(DtRealObservation),
 
 
 ## -----------------------------------------------------------------------------
-
-onde <- filter(onde, LbRegion %in% c("Bretagne", "PdL"))
-
+onde <- onde %>%
+  filter(CdDepartement %in% c("29", "22", "35", "56", "85", "44", "49", "53", "72"))
 
 ## ----gererCampagnes-----------------------------------------------------------
 onde <- gerer_les_campagnes(onde_df = onde)

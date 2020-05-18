@@ -41,20 +41,39 @@ Il propose un ensemble de fonctions qui permettent de :
 
 # Installation
 
-L'installation du *package* se fait par la fonction `library`. Pour fonctionner, il fait appel à d'autres *packages* qui sont aussi installés par défaut quand on installe , `ondetools`.
+Comme tout package R, {ondetools} doit d'abord être téléchargé, puis activé.
+
+Pour le télécharger, suivre les instructions de [ce post de blog](http://kamoke.fr/index.php/2020/03/).
+
+L'activation du *package* se fait par la fonction `library`. Pour fonctionner, il fait appel à d'autres *packages* qui sont aussi installés par défaut quand on installe {ondetools}.
 
 ```{r packages, message = FALSE}
 library(ondetools)
+```
 
-# autres packages nécessaire pour exécuter les lignes de code ci-dessous
-library(tidyverse)
-library(sf) 
+D'autres *packages* sont nécessaires, non pas au fonctionnement de {ondetools}, mais pour exécuter le présent tutoriel :
+
+* Présentation des tableaux html : `DT`
+* Cartographie : `mapview` et `sf`
+* Mise en forme des données : `tidyverse` et `lubridate`
+
+```{r, eval = FALSE}
+# Téléchargement
+install.packages(c("DT", "lubridate", "mapview", "sf", "tidyverse"))
+```
+
+```{r, eval = TRUE}
+# Activation
+library(DT)
+library(lubridate)
 library(mapview)
+library(sf) 
+library(tidyverse)
 ```
 
 Chaque fonction est accompagnée d'un fichier d'aide. Exemple :
 
-```{r exemple1, eval = FALSE}
+```{r exemple1, eval = FALSE, echo = TRUE}
 ?calculer_assecs_ete()
 ```
 
@@ -109,13 +128,11 @@ Les caractéristiques des variables peuvent être obtenues par la fonction `str(
 str(onde)
 ```
 
-## Gestion des codes régions et création de la variable Mois
+## Création de la variable Mois
 
-Entre le début et la fin de la série, certaines régions ont été regroupées. Pour avoir une cohérence d'ensemble du jeu de données, la variable `LbRegion` est recodée pour se conformer au découpage régional en 2020. Une variable `Mois` est créée à partir de la date d'observation. Pour un usage graphique ultérieur, elle est en format texte à 2 caractères. 
+Une variable `Mois` est créée à partir de la date d'observation. Pour un usage graphique ultérieur, elle est en format texte à 2 caractères. 
 
 ```{r gestionMois}
-
-onde <- gerer_codes_region(onde)
 
 onde <- mutate(onde, Mois = lubridate::ymd(DtRealObservation),
                Mois = lubridate::month(Mois),
@@ -129,11 +146,9 @@ onde <- mutate(onde, Mois = lubridate::ymd(DtRealObservation),
 Il existe plusieurs variables correspondants aux départements, régions, districts hydrographiques qui permettent de filtrer simplement. Ici, nous nous intéressons aux régions Bretagne et Pays-de-la-Loire.
 
 ```{r}
-
-onde <- filter(onde, LbRegion %in% c("Bretagne", "PdL"))
-
+onde <- onde %>%
+  filter(CdDepartement %in% c("29", "22", "35", "56", "85", "44", "49", "53", "72"))
 ```
-
 ## Gestion des campagnes
 
 La fonction `gerer_les_campagnes` filtre les données pour ne conserver qu'une observation par mois. De mai à septembre inclus, c'est l'observation de la campagne "usuelle" qui est retenue. D'octobre à avril, c'est la plus sèche des observations "complémentaires". 
