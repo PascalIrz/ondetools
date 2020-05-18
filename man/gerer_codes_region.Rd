@@ -16,6 +16,7 @@ La sortie de la fonction est un dataframe contenant des données ONDE où les co
 }
 \description{
 Gestion des codes régions, en particulier des problèmes issus des fusions qui ont changé les intitulés.
+La mise à jour des régions sur les fichiers de données a été opérée début 2020 donc cette fonction
 }
 \examples{
 \dontrun{

@@ -1,6 +1,8 @@
 #' Gestion des codes régions
 #'
 #' Gestion des codes régions, en particulier des problèmes issus des fusions qui ont changé les intitulés.
+#' La mise à jour des régions sur les fichiers de données a été opérée début 2020 donc cette fonction
+#      n'est utile que pour les fichiers qui ont été téléchargés antérieurement. 
 #'
 #' @param onde_df Un dataframe contenant des données ONDE mis en forme par la fonction
 #'     assembler_fichiers_onde_annuels_csv().
