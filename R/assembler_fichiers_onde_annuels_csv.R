@@ -24,14 +24,20 @@ assembler_fichiers_onde_annuels_csv <- function(annual_onde_files_dir) {
   # ces fichiers sont lus puis "empilés"
   # utilisation de rbind qui est plus tout-terrain que map() %>% bind_rows() ou mp_df()
   onde <- purrr::map(paste(annual_onde_files_dir, csv_files, sep = '/'),
-                     data.table::fread, encoding = "UTF-8", colClasses = c(CdCommune = "character")) %>% 
+                     data.table::fread, encoding = "UTF-8", colClasses = 'character') %>%
     reduce(rbind)
 
   # renommage des variables pour enlever les caractères < et >
   names(onde) <- names(onde) %>%
     str_replace_all(pattern = '[<>]', replacement = '')
 
-
+  # mise des variables au bon format
+  onde <- onde %>%
+    mutate(Annee = as.integer(Annee),
+           RsObservationNat = as.integer(RsObservationNat),
+           CoordXSiteHydro = as.numeric(CoordXSiteHydro),
+           CoordYSiteHydro = as.numeric(CoordYSiteHydro),
+           ProjCoordSiteHydro = as.integer(ProjCoordSiteHydro))
 
   return(onde)
 
