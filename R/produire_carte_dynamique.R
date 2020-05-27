@@ -21,7 +21,9 @@ produire_carte_dynamique <- function(couche_stations, popups_stations, couche_sa
 
     } else {
 
-          mapview(couche_sages, zcol = "NOM", alpha.regions = 0.3, viewer.suppress = TRUE, legend = FALSE)
+          mapview(couche_sages, zcol = "NOM", alpha.regions = 0.3,
+                  #viewer.suppress = TRUE,
+                  legend = FALSE)
 
           }
 
@@ -29,7 +31,8 @@ produire_carte_dynamique <- function(couche_stations, popups_stations, couche_sa
   carte2 <- if(is.na(couche_sages)) {
 
     mapview(couche_stations, cex = "pourcentage_assecs", layer.name = "Assecs", legend = FALSE,
-            popup = leafpop::popupGraph(popups_stations), viewer.suppress = TRUE,
+            popup = leafpop::popupGraph(popups_stations),
+            #viewer.suppress = TRUE,
             col.regions = "red")
 
     } else {
