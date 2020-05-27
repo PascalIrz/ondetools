@@ -26,13 +26,21 @@ exporter_les_graphiques_png <- function(stations_geo, liste_graphiques, repertoi
 
 
   # nommage des fichiers graphiques
-  noms_graphiques <- stations_geo %>%
-    select(CdSiteHydro, NID, NOM) %>%
-    mutate(NOM = iconv(NOM, from = "UTF-8", to = "ASCII//TRANSLIT"),
-           NOM = str_replace_all(NOM, pattern = "[-,]", replacement = "_"),
-           nom = paste0(NID, "_", CdSiteHydro, "_", NOM, ".png"),
-           nom = str_squish(nom)) %>%
-    pull(nom)
+  if(exists("NOM", where = stations_geo)) {
+
+    noms_graphiques <- stations_geo %>%
+      select(CdSiteHydro, NOM) %>%
+      mutate(NOM = iconv(NOM, from = "UTF-8", to = "ASCII//TRANSLIT"),
+             NOM = str_replace_all(NOM, pattern = "[-,]", replacement = "_"),
+             nom = paste0(CdSiteHydro, "_", NOM, ".png"),
+             nom = str_squish(nom)) %>%
+      pull(nom)
+  } else {
+    noms_graphiques <- stations_geo %>%
+      pull(CdSiteHydro)%>%
+      paste0(".png")
+  }
+
 
   dir.create(repertoire, showWarnings = FALSE)
 
