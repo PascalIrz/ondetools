@@ -18,23 +18,11 @@
 #'
 creer_couche_geo_stations <- function(onde_df) {
 
-  # stations_onde_geo <- onde_df %>%
-  #   st_as_sf(coords = c("CoordXSiteHydro", "CoordYSiteHydro"))
-  # 
-  # sf::st_crs(stations_onde_geo) = 2154
-  # 
-  # stations_onde_geo <- stations_onde_geo %>%
-  #   select(CdSiteHydro, LbRegion) %>%
-  #   mutate(LbRegion = as.character(LbRegion)) %>%
-  #   unique()
-  
-  stations_onde_geo <- onde_df %>%
+  onde_df %>%
     select(CdSiteHydro, LbRegion, CoordXSiteHydro, CoordYSiteHydro) %>%
     mutate(LbRegion = as.character(LbRegion)) %>%
-    unique() %>% 
+    unique() %>%
     st_as_sf(coords = c("CoordXSiteHydro", "CoordYSiteHydro"), crs = 2154)
-
-  return(stations_onde_geo)
 
 }
 
