@@ -25,3 +25,8 @@ Chaque fonction est accompagnée d'une aide.
 
 Une documentation donne une vue d'ensemble de la chaîne de traitements "type".
 
+# ATTENTION
+
+La version 2.9.0 du package {mapview} sur le dépôt CRAN contient in bug. Si vous n'arrivez pas à afficher la carte interactive, désinstallez {mapview} puis réinstallez-la version de développement depuis Github avec :
+`remotes::install_github("r-spatial/mapview")`
+
