@@ -1,6 +1,6 @@
 Package: ondetools
 Type: Package
-Title: Package pour Exploiter les Données de la Base ONDE
+Title: Package Pour Exploiter Les Données De La Base ONDE
 Version: 0.1.1
 Author: Pascal Irz
 Maintainer: Pascal Irz <pascal.irz@ofb.gouv.fr>
