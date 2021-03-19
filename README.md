@@ -17,7 +17,6 @@ Il propose un ensemble de fonctions qui permettent de :
 - télécharger les fichiers bruts annuels annuels
 - les décompresser
 - les assembler
-- recoder les régions (fusions)
 - pivoter le tableau en format “large”
 - compléter les données des stations par des données sur les SAGEs
 - calculer les statistiques d’assecs estivaux

@@ -1,6 +1,6 @@
 Package: ondetools
 Type: Package
-Title: Package pour exploiter les données de la base ONDE
+Title: Package pour Exploiter les Données de la Base ONDE
 Version: 0.1.1
 Author: Pascal Irz
 Maintainer: Pascal Irz <pascal.irz@ofb.gouv.fr>
@@ -31,4 +31,3 @@ RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     rmarkdown
-VignetteBuilder: knitr
