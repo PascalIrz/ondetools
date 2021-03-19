@@ -1,3 +1,8 @@
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/PascalIrz/ondetools/workflows/R-CMD-check/badge.svg)](https://github.com/PascalIrz/ondetools/actions)
+<!-- badges: end -->
+
+
 <div align="right"><img src="http://kamoke.fr/wp-content/uploads/2020/04/hex_ondetools_logo.png"></div align="right">
 
 # {ondetools}
@@ -8,6 +13,7 @@ Le package {ondetools} vise à faciliter le chargement et l'exploitation des don
 La logique suivie est celle d’une chaîne de traitements depuis le téléchargement des données brutes sur le web jusqu’à la visualisation cartographique.
 
 Il propose un ensemble de fonctions qui permettent de :
+
 - télécharger les fichiers bruts annuels annuels
 - les décompresser
 - les assembler
