@@ -9,11 +9,12 @@
 #' @return le dataframe en format large (une colonne par annee_mois)
 #' @export
 #' @importFrom magrittr %>%
-#' @importFrom dplyr mutate select
+#' @importFrom dplyr mutate select everything
 #' @importFrom tidyr spread
 #'
 #' @examples \dontrun{
-#' onde_lb_large <- passer_en_format_large(onde_df_long = onde)}
+#' onde_lb_large <- passer_en_format_large(onde_df_long = onde)
+#' }
 #'
 passer_en_format_large <- function(onde_df_long) {
 

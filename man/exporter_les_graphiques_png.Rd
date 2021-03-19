@@ -25,5 +25,9 @@ Cette fonction exporte chacun des graphiques au format png, le nomme selon les c
     par station. L'exécution de la fonction prend environ une seconde par station.
 }
 \examples{
-
+\dontrun{
+exporter_les_graphiques_png(stations_geo = stations_onde_geo,
+liste_graphiques = graphiques,
+repertoire = 'processed_data/graphiques')
+}
 }

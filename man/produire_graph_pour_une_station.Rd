@@ -22,5 +22,15 @@ Cette fonction permet de produire le graphique des assecs pour une station donn√
     de la s√©rie.
 }
 \examples{
+\dontrun{
+mes_couleurs <- c("Ecoulement\nvisible" = "blue",
+"Ecoulement\nnon visible" = "brown",
+"Assec" = "red",
+"Observation\nimpossible" = "grey",
+"NA" = "grey")
 
+produire_graph_pour_une_station(code_station = "J0014011",
+onde_df = onde_ts_mois,
+couleurs = mes_couleurs)
+}
 }

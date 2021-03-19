@@ -20,8 +20,11 @@
 #' @importFrom ggplot2 ggsave
 #' @importFrom purrr pwalk
 #'
-#' @examples
-#'
+#' @examples \dontrun{
+#' exporter_les_graphiques_png(stations_geo = stations_onde_geo,
+#' liste_graphiques = graphiques,
+#' repertoire = 'processed_data/graphiques')
+#' }
 exporter_les_graphiques_png <- function(stations_geo, liste_graphiques, repertoire)  {
 
 

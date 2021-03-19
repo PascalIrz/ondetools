@@ -13,6 +13,7 @@
 #' @importFrom purrr map reduce
 #' @importFrom data.table fread
 #' @importFrom stringr str_replace_all
+#' @importFrom utils glob2rx
 #'
 #' @examples
 #' \dontrun{

@@ -16,8 +16,12 @@
 #'
 #' @importFrom purrr map
 #'
-#' @examples
-#'
+#' @examples \dontrun{
+#' graphiques <- produire_graph_pour_toutes_les_stations(stations = codes_stations,
+#' fonction_graphique = produire_graph_pour_une_station,
+#' onde_df = onde_ts_mois,
+#' couleurs = mes_couleurs)
+#' }
 produire_graph_pour_toutes_les_stations <- function(stations, fonction_graphique, onde_df_ts_mois, couleurs) {
 
 graphiques <- map(.x = stations,

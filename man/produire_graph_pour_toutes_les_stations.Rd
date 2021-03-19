@@ -31,5 +31,10 @@ Cette fonction est une "moulinette" qui permet d'appliquer la fonction de produc
     station, mais à un ensemble.
 }
 \examples{
-
+\dontrun{
+graphiques <- produire_graph_pour_toutes_les_stations(stations = codes_stations,
+fonction_graphique = produire_graph_pour_une_station,
+onde_df = onde_ts_mois,
+couleurs = mes_couleurs)
+}
 }

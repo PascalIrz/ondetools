@@ -19,5 +19,8 @@ Caractérisation de la fréquence des assecs. Comme le recours à des campagnes 
     aux observations des mois d'été, donc des données des campagnes "usuelles".
 }
 \examples{
+\dontrun{
+assecs <- calculer_assecs_ete(onde_df = onde)
+}
 
 }

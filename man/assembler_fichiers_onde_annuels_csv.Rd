@@ -19,5 +19,10 @@ Cette fonction permet d'assembler - en les empilant - les fichiers csv issus de 
     pour l'ensemble des années où la donnée est disponible.
 }
 \examples{
+\dontrun{
+onde <- assembler_fichiers_onde_annuels_csv(
+annual_onde_files_dir = "raw_data/fichiers_onde_annuels_zippes"
+)
+}
 
 }

@@ -19,6 +19,7 @@ Cette fonction "pivote" le tableau ONDE produit par la fonction assembler_fichie
 }
 \examples{
 \dontrun{
-onde_lb_large <- passer_en_format_large(onde_df_long = onde)}
+onde_lb_large <- passer_en_format_large(onde_df_long = onde)
+}
 
 }

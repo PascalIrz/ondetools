@@ -18,10 +18,14 @@
 #' @importFrom stringr str_subset str_split
 #' @importFrom utils download.file unzip
 #'
-#' @examples \dontrun{
-#' telecharger_fichiers_onde_annuels() }
+#' @examples
+#' \dontrun{
+#' url_onde <- paste0("https://onde.eaufrance.fr/content/",
+#' "t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e")
 #'
-telecharger_fichiers_onde_annuels <- function(url = "https://onde.eaufrance.fr/content/t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e",
+#' telecharger_fichiers_onde_annuels(url = url_onde, raw_data_dir = 'raw_data')
+#' }
+telecharger_fichiers_onde_annuels <- function(url,
                                               raw_data_dir = 'raw_data') {
 
   # liste des URL des fichiers zippés
@@ -32,8 +36,6 @@ telecharger_fichiers_onde_annuels <- function(url = "https://onde.eaufrance.fr/c
 
   # création du répertoire de stockage s'il n'existe pas encore
    annual_onde_files_dir <- paste(raw_data_dir, "fichiers_onde_annuels_zippes", sep = '/')
-  # fs::dir_create(annual_onde_files_dir)
-  # annual_onde_files_dir <- "fichiers_onde_annuels_zippes"
    dir.create(raw_data_dir)
    dir.create(annual_onde_files_dir, showWarnings = FALSE)
 

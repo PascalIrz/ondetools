@@ -13,8 +13,11 @@
 #' @importFrom mapview mapview
 #' @importFrom leafpop popupGraph
 #'
-#' @examples
-#'
+#' @examples \dontrun{
+#' produire_carte_dynamique (couche_sages = sages,
+#' couche_stations = stations_onde_geo,
+#' popups_stations = graphiques)
+#' }
 produire_carte_dynamique <- function(couche_stations, popups_stations, couche_sages = NA) {
 
   carte1 <- if(is.na(couche_sages)) {NA

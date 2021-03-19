@@ -21,5 +21,8 @@ Cette fonction permet d'ajouter à l'objet géographique (classe `sf` points) de
     stations CdSiteHydro.
 }
 \examples{
-
+\dontrun{
+stations_onde_geo <- stations_onde_geo \%>\%
+    ajouter_donnees_assecs_aux_stations(assecs_df = assecs)
+}
 }

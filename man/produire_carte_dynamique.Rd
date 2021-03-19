@@ -22,5 +22,9 @@ Fonction permattant de produire la carte dynamique des stations avec des symbole
     des observations où la station est en assec avec une sous-couche des SAGE. Plusieurs fonds de cartes sont proposés.
 }
 \examples{
-
+\dontrun{
+produire_carte_dynamique (couche_sages = sages,
+couche_stations = stations_onde_geo,
+popups_stations = graphiques)
+}
 }

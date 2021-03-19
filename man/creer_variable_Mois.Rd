@@ -18,5 +18,8 @@ Création de la variable Mois en 2 caractères alphanumériques (01 à 12). Ce f
     graphiques ultérieurs qui nécessitent une variable catégorielle mais ordonnée.
 }
 \examples{
-
+\dontrun{
+stations_onde_geo <- stations_onde_geo \%>\%
+    creer_variable_Mois()
+}
 }

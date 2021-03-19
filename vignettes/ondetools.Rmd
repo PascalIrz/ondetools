@@ -56,14 +56,15 @@ D'autres *packages* sont nécessaires, non pas au fonctionnement de {ondetools},
 * Cartographie : `mapview` et `sf`
 * Mise en forme des données : `tidyverse` et `lubridate`
 
+Téléchargement :
+
 ```{r, eval = FALSE}
-# Téléchargement
-install.packages(c("DT", "lubridate", "mapview", "sf", "tidyverse"))
+install.packages(c("lubridate", "mapview", "sf", "tidyverse"))
 ```
 
+Installation :
+
 ```{r, eval = TRUE}
-# Activation
-library(DT)
 library(lubridate)
 library(mapview)
 library(sf) 

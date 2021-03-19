@@ -4,11 +4,7 @@
 \alias{telecharger_fichiers_onde_annuels}
 \title{Télécharger les fichiers}
 \usage{
-telecharger_fichiers_onde_annuels(
- 
-    url = "https://onde.eaufrance.fr/content/t\%C3\%A9l\%C3\%A9charger-les-donn\%C3\%A9es-des-campagnes-par-ann\%C3\%A9e",
-  raw_data_dir = "raw_data"
-)
+telecharger_fichiers_onde_annuels(url, raw_data_dir = "raw_data")
 }
 \arguments{
 \item{url}{La chaîne de caractères indiquant l'url où se trouvent les fichiers annuels à télécharger.}
@@ -28,6 +24,9 @@ Cette fonction permet de télécharger les fichiers compressés mis à dispositi
 }
 \examples{
 \dontrun{
-telecharger_fichiers_onde_annuels() }
+url_onde <- paste0("https://onde.eaufrance.fr/content/",
+"t\%C3\%A9l\%C3\%A9charger-les-donn\%C3\%A9es-des-campagnes-par-ann\%C3\%A9e")
 
+telecharger_fichiers_onde_annuels(url = url_onde, raw_data_dir = 'raw_data')
+}
 }

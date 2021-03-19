@@ -16,8 +16,17 @@
 #' @importFrom ggplot2 labs guides guide_legend
 #' @importFrom stringr str_wrap
 #'
-#' @examples
+#' @examples \dontrun{
+#' mes_couleurs <- c("Ecoulement\nvisible" = "blue",
+#' "Ecoulement\nnon visible" = "brown",
+#' "Assec" = "red",
+#' "Observation\nimpossible" = "grey",
+#' "NA" = "grey")
 #'
+#' produire_graph_pour_une_station(code_station = "J0014011",
+#' onde_df = onde_ts_mois,
+#' couleurs = mes_couleurs)
+#' }
 produire_graph_pour_une_station <- function(code_station, onde_df, couleurs){
 
   prov <- onde_df %>%

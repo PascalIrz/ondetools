@@ -14,8 +14,10 @@
 #' @importFrom dplyr left_join mutate
 #' @importFrom tidyr replace_na
 #'
-#' @examples
-#'
+#' @examples \dontrun{
+#' stations_onde_geo <- stations_onde_geo %>%
+#'     ajouter_donnees_assecs_aux_stations(assecs_df = assecs)
+#' }
 ajouter_donnees_assecs_aux_stations <-  function(stations_geo, assecs_df) {
 
   stations_geo <- stations_geo %>%

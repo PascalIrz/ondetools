@@ -13,8 +13,10 @@
 #' @importFrom lubridate ymd
 #' @importFrom stringr str_pad
 #'
-#' @examples
-#'
+#' @examples \dontrun{
+#' stations_onde_geo <- stations_onde_geo %>%
+#'     creer_variable_Mois()
+#' }
 creer_variable_Mois <- function(onde_df) {
 
   onde_df <- onde_df %>%

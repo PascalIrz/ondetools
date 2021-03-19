@@ -10,11 +10,13 @@
 #'     et le pourcentage des observations où la station était en assec.
 #' @export
 #' @importFrom magrittr %>%
-#' @importFrom dplyr select filter pull group_by summarise ungroup mutate
+#' @importFrom dplyr select filter pull group_by summarise ungroup mutate n
 #' @importFrom magrittr %>%
 #' @importFrom magrittr %>%
 #'
-#' @examples
+#' @examples \dontrun{
+#' assecs <- calculer_assecs_ete(onde_df = onde)
+#' }
 #'
 calculer_assecs_ete <- function(onde_df) {
 
