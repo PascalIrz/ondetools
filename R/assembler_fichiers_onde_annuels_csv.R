@@ -15,16 +15,25 @@
 #' @importFrom stringr str_replace_all
 #'
 #' @examples
+#' \dontrun{
+#' onde <- assembler_fichiers_onde_annuels_csv(
+#' annual_onde_files_dir = "raw_data/fichiers_onde_annuels_zippes"
+#' )
+#' }
 #'
 assembler_fichiers_onde_annuels_csv <- function(annual_onde_files_dir) {
 
   # liste des fichiers .csv
-  csv_files <- list.files(path = annual_onde_files_dir, pattern = "*.csv")
+  csv_files <- list.files(path = annual_onde_files_dir,
+                          pattern = glob2rx("onde_france*.csv"),
+                          full.names = TRUE)
 
   # ces fichiers sont lus puis "empilés"
   # utilisation de rbind qui est plus tout-terrain que map() %>% bind_rows() ou mp_df()
-  onde <- purrr::map(paste(annual_onde_files_dir, csv_files, sep = '/'),
-                     data.table::fread, encoding = "UTF-8", colClasses = 'character') %>%
+  onde <- purrr::map(.x = csv_files,
+                     .f = data.table::fread,
+                          encoding = "UTF-8",
+                          colClasses = 'character') %>%
     reduce(rbind)
 
   # renommage des variables pour enlever les caractères < et >
