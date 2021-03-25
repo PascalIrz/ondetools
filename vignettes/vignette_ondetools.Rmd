@@ -1,6 +1,6 @@
 ---
 title: "Documentation du package ondetools"
-date: "Le `r format(Sys.time(), '%d %B %Y')`"
+date: "Le `r format(Sys.time(), '%d %B %Y, %H:%M')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Documentation du package ondetools}
@@ -315,6 +315,9 @@ produire_carte_dynamique (couche_stations = stations_onde_geo,
 
 
 
+```{r}
+unlink("raw_data", recursive=TRUE)
+```
 
 
 
