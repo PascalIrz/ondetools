@@ -1,8 +1,9 @@
 ---
-title: "vignette_ondetools"
+title: "Documentation du package ondetools"
+date: "Le `r format(Sys.time(), '%d %B %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{vignette_ondetools}
+  %\VignetteIndexEntry{Documentation du package ondetools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -217,7 +218,7 @@ stations_onde_geo <- st_transform(stations_onde_geo, crs = 27572)
 
 Si l'on veut vérifier la cohérence des étapes précédentes, on peut visualiser les objets.
 
-```{r}
+```{r, echo = FALSE}
 mapviewOptions(fgb = FALSE)
 ```
 
