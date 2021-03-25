@@ -1,0 +1,336 @@
+---
+title: "vignette_ondetools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette_ondetools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = TRUE,
+  eval = TRUE
+)
+```
+
+# Pourquoi ce *package* ?
+
+Le *package* `ondetools` vise à faciliter le chargement et l'exploitation des données de [l'observatoire des étiages](https://www.data.gouv.fr/fr/datasets/observatoire-national-des-etiages/) qui sont téléchargeables depuis [l'url suivante](https://onde.eaufrance.fr/content/t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e).
+
+La logique suivie est celle d'une chaîne de traitements depuis le téléchargement des données brutes sur le web jusqu'à la visualisation cartographique.
+
+Il propose un ensemble de fonctions qui permettent de :    
+- télécharger les fichiers bruts annuels annuels   
+- les décompresser   
+- les assembler   
+- pivoter le tableau en format "large"   
+- compléter les données des stations par des données sur les SAGEs   
+- calculer les statistiques d'assecs estivaux   
+- visualiser graphiquement le "tableau de bord" de chacune des stations   
+- exporter ces graphiques au format *.bmp*  
+- visualiser les données en cartographie dynamique   
+
+>**La chaîne de traitements étant dédiée aux données ONDE au format standardisé de leur diffusion, elle ne fonctionne que dans la mesure où l'utilisateur conserve les noms des variables. Le moindre renommage et plus rien ne marche !**
+
+# Installation
+
+Comme tout package R, {ondetools} doit d'abord être téléchargé, puis activé.
+
+Pour le télécharger, suivre les instructions de [ce post de blog](http://kamoke.fr/index.php/2020/03/).
+
+L'activation du *package* se fait par la fonction `library`. Pour fonctionner, il fait appel à d'autres *packages* qui sont aussi installés par défaut quand on installe {ondetools}.
+
+```{r packages, message = FALSE}
+library(ondetools)
+```
+
+D'autres *packages* sont nécessaires, non pas au fonctionnement de {ondetools}, mais pour exécuter le présent tutoriel :
+
+* Présentation des tableaux html : `DT`
+* Cartographie : `mapview` et `sf`
+* Mise en forme des données : `tidyverse` et `lubridate`
+
+Téléchargement :
+
+```{r, eval = FALSE}
+install.packages(c("lubridate", "mapview", "sf", "tidyverse"))
+```
+
+Installation :
+
+```{r, message = FALSE, warning = FALSE}
+library(lubridate)
+library(mapview)
+library(sf) 
+library(tidyverse)
+```
+
+Chaque fonction est accompagnée d'un fichier d'aide. Exemple :
+
+```{r exemple1, eval = FALSE, echo = TRUE}
+?calculer_assecs_ete()
+```
+
+# Chargement et mise en forme des données tabulées
+
+## Téléchargement et stockage des fichiers 
+
+Le stockage par défaut de ces fichiers est dans un sous-répertoire du répertoire de travail "raw_data/fichiers_onde_annuels_zippes".
+
+```{r telechargemement, eval = TRUE, warning = FALSE}
+url_onde <- paste0("https://onde.eaufrance.fr/content/",
+                   "t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e")
+```
+
+```{r, eval = TRUE, warning = FALSE}
+telecharger_fichiers_onde_annuels(url = url_onde, raw_data_dir = 'raw_data')
+```
+
+Vérification que les fichiers annuels zippés sont dans le bon répertoire
+
+```{r, eval = TRUE}
+list.files("raw_data/fichiers_onde_annuels_zippes")
+```
+
+
+## Assemblage des fichiers annuels
+
+Il s'agit d'empiler les fichiers annuels.
+
+```{r assemblage, eval = TRUE}
+onde <- assembler_fichiers_onde_annuels_csv(annual_onde_files_dir = "raw_data/fichiers_onde_annuels_zippes")
+```
+
+Si l'on souhaite supprimer le répertoire contenant les fichiers téléchargés :
+
+```{r suppressionRawData, eval = TRUE, echo = TRUE}
+unlink("raw_data/fichiers_onde_annuels_zippes", recursive = TRUE)
+```
+
+## Vérification que tout s'est bien passé
+
+Les dimensions du tableau de données ou `data.frame` :
+```{r}
+dim(onde)
+```
+
+Il y a donc `r nrow(onde)` lignes et `r ncol(onde)` colonnes.
+
+Les caractéristiques des variables peuvent être obtenues par la fonction `str()` :
+
+```{r}
+str(onde)
+```
+
+## Création de la variable Mois
+
+Une variable `Mois` est créée à partir de la date d'observation. Pour un usage graphique ultérieur, elle est en format texte à 2 caractères. 
+
+```{r gestionMois}
+
+onde <- mutate(onde, Mois = lubridate::ymd(DtRealObservation),
+               Mois = lubridate::month(Mois),
+               Mois = str_pad(Mois, width = 2, side = "left", pad = "0")) %>%
+  filter(TRUE)
+
+```
+
+## Filtrage sur le périmètre géographique
+
+Il existe plusieurs variables correspondants aux départements, régions, districts hydrographiques qui permettent de filtrer simplement. Ici, nous nous intéressons aux régions Bretagne et Pays-de-la-Loire.
+
+```{r}
+onde <- onde %>%
+  filter(CdDepartement %in% c("29", "22", "35", "56", "85", "44", "49", "53", "72"))
+```
+## Gestion des campagnes
+
+La fonction `gerer_les_campagnes` filtre les données pour ne conserver qu'une observation par mois. De mai à septembre inclus, c'est l'observation de la campagne "usuelle" qui est retenue. D'octobre à avril, c'est la plus sèche des observations "complémentaires". 
+
+```{r gererCampagnes}
+onde <- gerer_les_campagnes(onde_df = onde)
+```
+
+## Passage en format "large"
+
+Pour certains usages comme la visualisation des observations d'un mois donné (ex : juillet 2018) avec *QGIS*, il peut être intéressant de disposer des mêmes données, mais avec une colonne par `année_mois`. La fonction `passer_en_format_large()` permet cette manipulation en pivotant les cellules à la manière d'un tableau croisé dynamique dans Excel®.
+
+```{r}
+onde_lb_large <- passer_en_format_large(onde_df_long = onde)
+```
+
+## Exportation en format CSV
+
+On peut à ce stade exporter les tableaux de données en format texte directement lisible par Excel dans un répertoire "processed_data".
+
+```{r eval = FALSE}
+dir.create(file.path(subDir = 'processed_data'), showWarnings = FALSE)
+write_excel_csv2(x = onde, path = 'processed_data/onde_long.csv')
+write_excel_csv2(x = onde_lb_large, path = 'processed_data/onde_large.csv')
+```
+
+
+# Création de la couche géographique des stations
+
+Il s'agit de transformer le tableau de données au format "long" en objet géographique "points" au moyen de ses colonnes de coordonnées (`CoordXSiteHydro` et `CoordYSiteHydro`). Le système de projection est Lambert 93.
+
+```{r}
+stations_onde_geo <- creer_couche_geo_stations(onde_df = onde)
+```
+
+Vérification
+
+```{r}
+ggplot(data = stations_onde_geo) + geom_sf()
+```
+
+
+# Caractérisation des assecs estivaux
+
+Pour visualiser la fréquence des assecs sur le périmètre étudié, il est nécessaire d'agréger les données par station. Comme les efforts de collecte de données sont standardisés pour les campagnes "usuelles" (une observation par mois), tandis que les campagnes compléentaires varient fortement d'un département à un autre, seules les premières sont retenues.
+
+## Calcul
+
+La fonction `calculer_assecs_ete()` retourne un *dataframe* donnant pour chaque station (ligne) le nombre d'observations, le nombre d'assecs et le pourcentage des observations où la station était en assec.
+
+```{r}
+assecs <- calculer_assecs_ete(onde_df = onde)
+```
+
+On complète la couche géographique des stations avec ces données. 
+
+```{r}
+stations_onde_geo <- ajouter_donnees_assecs_aux_stations(stations_geo = stations_onde_geo,
+                                                         assecs_df = assecs)
+```
+
+Si nécessaire, on peut reprojeter en WGS84 - le système utilisé par `OpenStreetMap` ou `GoogleMaps`.
+
+```{r eval = TRUE}
+stations_onde_geo <- st_transform(stations_onde_geo, crs = 27572)
+```
+
+## Vérification visuelle
+
+Si l'on veut vérifier la cohérence des étapes précédentes, on peut visualiser les objets.
+
+```{r}
+mapviewOptions(fgb = FALSE)
+```
+
+
+```{r eval = FALSE}
+mapview(stations_onde_geo, cex = "taille_point",
+        layer.name = "Assecs", label = "Station ONDE",
+        col.regions = "red")
+
+```
+
+# Production des graphiques par station
+
+## Définition de la légende et de ses codes couleur
+
+On définit une palette de couleurs pour s'assurer qu'une même situation soit systématiquement représentée par une même couleur dans les graphiques.
+
+Le `\n` est le retour à la ligne pour que les étiquettes ne prennent pas trop de place sur le graphique
+
+```{r}
+mes_couleurs <- c("Ecoulement\nvisible" = "blue",
+          "Ecoulement\nnon visible" = "brown",
+          "Assec" = "red",
+          "Observation\nimpossible" = "grey",
+          "NA" = "grey")
+```
+
+Pour les besoins de la représentation graphique, on complète le fichier avec des NA (données manquantes) pour les mois sans observations. La fonction `completer_observations_mois_manquants()` est alors utile.
+
+```{r}
+codes_stations <- unique(pull(stations_onde_geo, CdSiteHydro))
+
+onde_ts_mois <- completer_observations_mois_manquants(onde_df = onde,
+                                                      stations = codes_stations)
+```
+
+## Essai de la fonction graphique
+
+```{r graphUneStation, fig.height = 5, fig.width = 6, align = "center"}
+ma_station <- pull(onde, CdSiteHydro)
+ma_station <- ma_station[3689]
+
+produire_graph_pour_une_station(code_station = ma_station, onde_df = onde_ts_mois, couleurs = mes_couleurs)
+```
+
+
+
+## Liste contenant tous les graphiques
+
+Le logiciel R permet la manipulation de nombreuses `classes` d'objets parmi lesquelles on trouve les `listes`. Une liste est un ensemble d'élements qui peuvent être de nature différente. Ici, nous allons créer une liste qui contiendra autant d'objets graphiques qu'il y a de stations.
+
+La fonction `produire_graph_pour_toutes_les_stations()` est une "moulinette" qui permet d'appliquer la fonction de production du graphique (`produire_graph_pour_une_station()`) non pas à une station, mais à un ensemble.
+
+Cette liste servira soit pour afficher les graphiques sous la forme de *popups* dans `mapview`, soit pour les exporter 1 à 1 en *.png* pour d'autres usages.
+
+```{r}
+graphiques <- produire_graph_pour_toutes_les_stations(stations = codes_stations,
+                                                      fonction_graphique = produire_graph_pour_une_station,
+                                                      onde_df = onde_ts_mois,
+                                                      couleurs = mes_couleurs)
+```
+
+Pour vérifier que la liste a bien été créée, on peut afficher certains de ses éléments, par exemple les 10^ème^ à 12^ème^.
+
+```{r, fig.height = 5, fig.width = 6, align = "center"}
+graphiques[10:12]
+```
+
+## Exportation des graphiques en *.png*
+
+La fonction `exporter_les_graphiques_png` exporte chacun des graphiques de la liste au format png, le nomme selon les codes stations. Ils sont stockés dans le répertoire fourni par l'utilisateur. Si le répertoire n'existe pas, la fonction le crée. Sinon, elle écrase son contenu antérieur. Au final, il y a un fichier par station. L'exécution de la fonction prend environ une seconde par station.
+
+```{r eval = FALSE}
+exporter_les_graphiques_png(stations_geo = stations_onde_geo,
+                            liste_graphiques = graphiques,
+                            repertoire = 'processed_data/graphiques')
+```
+
+# Représentation cartographique
+
+On peut afficher nos résultats dans une fenêtre `leaflet` au moyen du *package* `mapview` avec les *popup* graphiques.
+
+>NB : L'affichage initial prend un peu de temps, variable selon la taille de la région représentée. C'est dû d'une part au chargement des données géographiques et d'autre part au chargement des popups graphiques.
+
+```{r cartoDynamique, fig.height = 7, fig.width = 8, align = "center", warning=FALSE}
+
+mapviewOptions(basemaps = c("OpenStreetMap", "OpenTopoMap", 
+                            "Esri.WorldShadedRelief", "Esri.WorldImagery")) 
+
+produire_carte_dynamique (couche_stations = stations_onde_geo,
+                          popups_stations = graphiques)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            
+
