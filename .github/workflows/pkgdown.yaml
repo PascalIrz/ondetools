@@ -9,42 +9,20 @@ on:
 name: pkgdown
 
 jobs:
-  pkgdown:
+  render:
+    name: Render vignette
     runs-on: macOS-latest
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
-
       - uses: r-lib/actions/setup-r@v1
-
       - uses: r-lib/actions/setup-pandoc@v1
-
-      - name: Query dependencies
+      - uses: r-lib/actions/setup-tinytex@v1
+      - name: Install rmarkdown
+        run: Rscript -e 'install.packages("rmarkdown")'
+      - name: Render my document to all types
+        run: Rscript -e 'rmarkdown::render("vignettes/vignette_ondetools.Rmd", output_format = "all")'
+      - name: Commit results
         run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Restore R package cache
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Install dependencies
-        run: |
-          remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown", type = "binary")
-        shell: Rscript {0}
-
-      - name: Install package
-        run: R CMD INSTALL .
-
-      - name: Deploy package
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
+          git add docs/articles*
+          git commit -m 'Re-build my-document' || echo "No changes to commit"
+          git push origin || echo "No changes to commit"
