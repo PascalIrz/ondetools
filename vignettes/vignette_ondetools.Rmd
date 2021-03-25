@@ -40,6 +40,11 @@ Il propose un ensemble de fonctions qui permettent de :
 
 Comme tout package R, {ondetools} doit d'abord être téléchargé, puis activé.
 
+```{r}
+devtools::install_github("PascalIrz/ondetools")
+```
+
+
 Pour le télécharger, suivre les instructions de [ce post de blog](http://kamoke.fr/index.php/2020/03/).
 
 L'activation du *package* se fait par la fonction `library`. Pour fonctionner, il fait appel à d'autres *packages* qui sont aussi installés par défaut quand on installe {ondetools}.
