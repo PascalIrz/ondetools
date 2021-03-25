@@ -18,7 +18,7 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1
       - uses: r-lib/actions/setup-tinytex@v1
       - name: Install rmarkdown
-        run: Rscript -e 'install.packages("rmarkdown")'
+        run: Rscript -e 'install.packages("rmarkdown", "devtools")'
       - name: Render my document to all types
         run: Rscript -e 'rmarkdown::render("vignettes/vignette_ondetools.Rmd", output_format = "all")'
       - name: Commit results
