@@ -217,6 +217,11 @@ stations_onde_geo <- st_transform(stations_onde_geo, crs = 27572)
 
 Si l'on veut vérifier la cohérence des étapes précédentes, on peut visualiser les objets.
 
+```{r}
+mapviewOptions(fgb = FALSE)
+```
+
+
 ```{r eval = FALSE}
 mapview(stations_onde_geo, cex = "taille_point",
         layer.name = "Assecs", label = "Station ONDE",
