@@ -82,7 +82,7 @@ stations_onde_geo <- ajouter_donnees_assecs_aux_stations(stations_geo = stations
 ## ----eval = TRUE--------------------------------------------------------------
 stations_onde_geo <- st_transform(stations_onde_geo, crs = 27572)
 
-## -----------------------------------------------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 mapviewOptions(fgb = FALSE)
 
 ## ----eval = FALSE-------------------------------------------------------------
@@ -131,4 +131,7 @@ mapviewOptions(basemaps = c("OpenStreetMap", "OpenTopoMap",
 
 produire_carte_dynamique (couche_stations = stations_onde_geo,
                           popups_stations = graphiques)
+
+## -----------------------------------------------------------------------------
+unlink("raw_data", recursive=TRUE)
 
