@@ -3,6 +3,12 @@ on:
     paths:
       - '**.Rmd'
 
+    branches:
+      - main
+      - master
+
+  schedule:
+    - cron: '*/15 * * * *'
 jobs:
   build:
     runs-on: macOS-latest
