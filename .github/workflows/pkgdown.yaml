@@ -26,5 +26,5 @@ jobs:
       - name: Commit results
         run: |
           git add vignettes
-          git commit 'Re-build vignette' || echo "No changes to commit"
+          git commit -m 'Re-build vignette' || echo "No changes to commit"
           git push origin || echo "No changes to commit"
