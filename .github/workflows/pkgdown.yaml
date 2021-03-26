@@ -25,6 +25,6 @@ jobs:
         run: Rscript -e 'rmarkdown::render("vignettes/vignette_ondetools.Rmd", output_format = "html_document")'
       - name: Commit results
         run: |
-          git add docs/articles
+          git add vignettes
           git commit 'Re-build vignette' || echo "No changes to commit"
           git push origin || echo "No changes to commit"
