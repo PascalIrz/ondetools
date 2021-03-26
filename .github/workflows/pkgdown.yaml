@@ -33,6 +33,10 @@ jobs:
           R -e 'install.packages("renv")'
           R -e 'renv::restore()'
 
+      - name: Install remotes
+        run: |
+          Rscript -e 'install.packages("remotes")'
+
       - name: Render Rmarkdown files
         run: |
           RMD_PATH=($(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '[.]Rmd$'))
