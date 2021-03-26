@@ -19,8 +19,8 @@ jobs:
       - uses: r-lib/actions/setup-tinytex@v1
       - name: Install rmarkdown
         run: Rscript -e 'install.packages("rmarkdown")'
-      - name: Install devtools
-        run: Rscript -e 'install.packages("devtools")'
+      - name: Install remotes
+        run: Rscript -e 'install.packages("remotes")'
       - name: Render vignette
         run: Rscript -e 'rmarkdown::render("vignettes/vignette_ondetools.Rmd", output_format = "html_document")'
       - name: Commit results
