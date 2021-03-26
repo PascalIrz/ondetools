@@ -22,7 +22,7 @@ jobs:
       - name: Install devtools
         run: Rscript -e 'install.packages("devtools")'
       - name: Render my document to all types
-        run: Rscript -e 'rmarkdown::render("vignettes/vignette_ondetools.Rmd", output_format = "all")'
+        run: Rscript -e 'rmarkdown::render("vignettes/vignette_ondetools.Rmd", output_format = "html_document")'
       - name: Commit results
         run: |
           git add docs/articles
