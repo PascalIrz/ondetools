@@ -42,6 +42,7 @@ Comme tout package R, {ondetools} doit d'abord être téléchargé, puis activé
 
 ```{r}
 remotes::install_github("PascalIrz/ondetools")
+# essai
 ```
 
 
