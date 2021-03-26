@@ -11,7 +11,7 @@ name: pkgdown
 jobs:
   render:
     name: Render vignette
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@v1
@@ -21,10 +21,10 @@ jobs:
         run: Rscript -e 'install.packages("rmarkdown")'
       - name: Install devtools
         run: Rscript -e 'install.packages("devtools")'
-      - name: Render my document to all types
+      - name: Render vignette
         run: Rscript -e 'rmarkdown::render("vignettes/vignette_ondetools.Rmd", output_format = "html_document")'
       - name: Commit results
         run: |
           git add docs/articles
-          git commit -m 'Re-build vignette' || echo "No changes to commit"
+          git commit 'Re-build vignette' || echo "No changes to commit"
           git push origin || echo "No changes to commit"
