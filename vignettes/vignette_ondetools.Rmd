@@ -40,9 +40,8 @@ Il propose un ensemble de fonctions qui permettent de :
 
 Comme tout package R, {ondetools} doit d'abord être téléchargé, puis activé.
 
-```{r}
+```{r, eval = FALSE}
 remotes::install_github("PascalIrz/ondetools")
-# essai
 ```
 
 
