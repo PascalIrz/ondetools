@@ -320,7 +320,7 @@ produire_carte_dynamique (couche_stations = stations_onde_geo,
 
 
 
-```{r}
+```{r, echo = FALSE}
 unlink("raw_data", recursive=TRUE)
 ```
 
@@ -328,7 +328,7 @@ unlink("raw_data", recursive=TRUE)
 
 
 
-
+blabla
 
 
 
