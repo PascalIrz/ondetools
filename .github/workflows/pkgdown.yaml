@@ -1,54 +1,48 @@
 on:
   push:
-    paths:
-      - '**.Rmd'
-
     branches:
       - main
       - master
 
+name: pkgdown
+
 jobs:
-  build:
+  pkgdown:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v2
 
-      - name: Setup R
-        uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-r@v1
 
-      - name: Install pandoc
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Query dependencies
         run: |
-          brew install pandoc
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
 
-      - name: Cache Renv packages
+      - name: Restore R package cache
         uses: actions/cache@v2
         with:
-          path: $HOME/.local/share/renv
-          key: r-${{ hashFiles('renv.lock') }}
-          restore-keys: r-
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
-      - name: Install packages
+      - name: Install dependencies
         run: |
-          R -e 'install.packages("renv")'
-          R -e 'renv::restore()'
+          remotes::install_deps(dependencies = TRUE)
+          install.packages("pkgdown", type = "binary")
+        shell: Rscript {0}
 
-      - name: Install remotes
-        run: |
-          Rscript -e 'install.packages("remotes")'
+      - name: Install package
+        run: R CMD INSTALL .
 
-      - name: Render Rmarkdown files
+      - name: Deploy package
         run: |
-          RMD_PATH=($(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'vignettes/[.]Rmd$'))
-          Rscript -e 'for (f in commandArgs(TRUE)) if (file.exists(f)) rmarkdown::render(f)' ${RMD_PATH[*]}
-
-      - name: Commit results
-        run: |
-          git config --local user.name "$GITHUB_ACTOR"
-          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git commit ${RMD_PATH[*]/.Rmd/.md} -m 'Re-build Rmarkdown files' || echo "No changes to commit"
-          git push origin || echo "No changes to commit"
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
