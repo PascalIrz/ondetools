@@ -4,9 +4,12 @@ on:
       - main
       - master
 
+<<<<<<< HEAD
   schedule:
     - cron: '*/15 * * * *'
 
+=======
+>>>>>>> 89931270193ec59cfe24ae17e2a681c008951ced
 name: pkgdown
 
 jobs:
@@ -16,11 +19,19 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
+<<<<<<< HEAD
 
       - uses: r-lib/actions/setup-r@v1
 
       - uses: r-lib/actions/setup-pandoc@v1
 
+=======
+
+      - uses: r-lib/actions/setup-r@v1
+
+      - uses: r-lib/actions/setup-pandoc@v1
+
+>>>>>>> 89931270193ec59cfe24ae17e2a681c008951ced
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -34,6 +45,7 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+<<<<<<< HEAD
 
       - name: Install dependencies
         run: |
@@ -41,6 +53,15 @@ jobs:
           install.packages("pkgdown", type = "binary")
         shell: Rscript {0}
 
+=======
+
+      - name: Install dependencies
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+          install.packages("pkgdown", type = "binary")
+        shell: Rscript {0}
+
+>>>>>>> 89931270193ec59cfe24ae17e2a681c008951ced
       - name: Install package
         run: R CMD INSTALL .
 
