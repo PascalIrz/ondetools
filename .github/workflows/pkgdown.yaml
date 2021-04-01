@@ -4,9 +4,6 @@ on:
       - main
       - master
 
-  schedule:
-    - cron: '*/15 * * * *'
-
 name: pkgdown
 
 jobs:
