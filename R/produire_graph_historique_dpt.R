@@ -59,7 +59,7 @@ produire_graph_historique_dpt <- function(onde_df,departement) {
                   taille_point = sqrt(pourcentage_assecs+1)) %>%
     dplyr::arrange(Annee,Mois) %>%
     tidyr::complete(Annee,Mois) %>%
-    dplyr::mutate(Mois = lubridate::month(as.numeric(Mois),label=T, abbr = T, locale = 'French')) %>%
+    dplyr::mutate(Mois = lubridate::month(as.numeric(Mois),label=T, abbr = T)) %>%
     # label pourcentage
     dplyr::mutate(Label = ifelse(is.na(n_assecs),"",glue::glue("{n_assecs}/{n_donnees}"))) %>%
     # label (nb stations / nb total)
