@@ -14,7 +14,7 @@ La logique suivie est celle d’une chaîne de traitements depuis le télécharg
 
 Il propose un ensemble de fonctions qui permettent de :
 
-- télécharger les fichiers bruts annuels annuels
+- télécharger les fichiers bruts annuels
 - les décompresser
 - les assembler
 - pivoter le tableau en format “large”

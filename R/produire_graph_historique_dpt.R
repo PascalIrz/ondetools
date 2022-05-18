@@ -32,6 +32,18 @@ produire_graph_historique_dpt <- function(onde_df,departement) {
 
   num_dpt <- departement
 
+  onde_df <-
+    onde_df %>%
+    dplyr::filter(CdDepartement == num_dpt) %>%
+    dplyr::mutate(Mois = format(as.Date(DtRealObservation),"%m"),
+                  DtRealObservation = lubridate::ymd(DtRealObservation),
+                  LbRsObservationNat = factor(LbRsObservationNat,
+                                              levels = c("Ecoulement visible",
+                                                         "Assec",
+                                                         "Ecoulement non visible",
+                                                         "Observation impossible") )) %>%
+    sf::st_as_sf(coords = c("CoordXSiteHydro","CoordYSiteHydro"), crs = 2154)
+
   ## 1) heatmap pourcentage assecs mensuels - saison estivale
 
   heatmap_df <-
