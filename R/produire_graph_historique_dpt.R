@@ -1,3 +1,4 @@
+#' @encoding UTF-8
 #' Produire un graphique synthétique sur l'historique des observations pour un département
 #'
 #' @param onde_df Le dataframe contenant les données ONDE en format long.
