@@ -1,5 +1,5 @@
-#' @encoding UTF-8
 #' Produire un graphique synthétique sur l'historique des observations pour un département
+#' @encoding UTF-8
 #'
 #' @param onde_df Le dataframe contenant les données ONDE en format long.
 #' @param departement Le département, correspondant à son numéro (ex: '14' pour le Calvados)
