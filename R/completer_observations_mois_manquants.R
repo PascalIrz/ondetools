@@ -29,7 +29,7 @@ completer_observations_mois_manquants <- function(onde_df, stations) {
     filter(CdSiteHydro %in% stations) %>%
     select(CdSiteHydro, LbSiteHydro, Annee, Mois, RsObservationNat) %>%
     complete(CdSiteHydro, Annee, Mois, fill = list(RsObservationNat = NA)) %>%
-    mutate(RsObservationNat = replace_na(RsObservationNat, replace = "NA"),
+    mutate(RsObservationNat = replace_na(as.character(RsObservationNat), replace = "NA"),
            RsObservationNat = as.factor(RsObservationNat),
            RsObservationNat = fct_recode(RsObservationNat, "Ecoulement visible" = "1",
                                          "Ecoulement non visible" = "2", "Assec" = "3",
