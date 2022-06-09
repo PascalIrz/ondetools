@@ -1,6 +1,6 @@
 #' Contours des départements français
-#' @encoding UTF-8
-#' Donnees spatiales au format 'sf', sytteme de projection RGF93 / Lambert-93
+#'
+#' Donnees spatiales au format 'sf', systeme de projection RGF93 / Lambert-93
 #'
 #' @format Dataframe au format sf avec 101 lignes et 3 variables:
 #' \describe{

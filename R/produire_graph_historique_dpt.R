@@ -71,8 +71,8 @@ produire_graph_historique_dpt <- function(onde_df,departement) {
     heatmap_df %>%
     ggplot2::ggplot() +
     ggplot2::aes(x = Annee, y = Mois, fill=pourcentage_assecs) +
-    geom_tile(col='white',size=0.5) +
-    scale_fill_gradientn("% d\'assecs",
+    ggplot2::geom_tile(col='white',size=0.5) +
+    ggplot2::scale_fill_gradientn("% d\'assecs",
                          colors = grDevices::adjustcolor(grDevices::hcl.colors(10, "RdYlBu",rev = T),alpha.f = 0.8),
                          limits=c(0,100),na.value = grDevices::adjustcolor("grey90",alpha.f = 0.7)) +
     ggplot2::geom_text(ggplot2::aes(label=Label_p),size=2.5,color="black",fontface='italic') +
@@ -82,12 +82,12 @@ produire_graph_historique_dpt <- function(onde_df,departement) {
     ylab("Mois") + xlab("Ann\u00e9es") +
     ggtitle("Proportion mensuelle des stations en assecs") +
     theme_bw() +
-    theme(title = element_text(size = 9,face = 'bold'),
-          axis.text.x = element_text(size=8,angle = 45,hjust = 1),
-          axis.text.y = element_text(size=8),
+    theme(title = ggplot2::element_text(size = 9,face = 'bold'),
+          axis.text.x = ggplot2::element_text(size=8,angle = 45,hjust = 1),
+          axis.text.y = ggplot2::element_text(size=8),
           legend.position = 'right',
-          axis.ticks = element_blank(),
-          panel.grid=element_blank())
+          axis.ticks = ggplot2::element_blank(),
+          panel.grid=ggplot2::element_blank())
 
   ## 2) plot moyenne annuelle assecs
 
@@ -113,9 +113,9 @@ produire_graph_historique_dpt <- function(onde_df,departement) {
     ggplot2::scale_x_continuous(breaks = scales::breaks_width(1)) +
     ggplot2::ggtitle("Proportion moyenne annuelle des stations en assecs") +
     ggplot2::theme_bw() +
-    ggplot2::theme(title = element_text(size = 9,face = 'bold'),
-          axis.text.x = element_text(size=8,angle = 45,hjust = 1),
-          axis.text.y = element_text(size=8))
+    ggplot2::theme(title = ggplot2::element_text(size = 9,face = 'bold'),
+          axis.text.x = ggplot2::element_text(size=8,angle = 45,hjust = 1),
+          axis.text.y = ggplot2::element_text(size=8))
 
 
   ## 3) durees assecs
@@ -130,7 +130,7 @@ produire_graph_historique_dpt <- function(onde_df,departement) {
     tidyr::as_tibble() %>%
     dplyr::arrange(CdSiteHydro,DtRealObservation) %>%
     dplyr::group_by(CdSiteHydro,Annee, ID = data.table::rleid(CdSiteHydro,RsObservationNat == 3 )) %>%
-    dplyr::mutate(mois_assec_consec = ifelse(RsObservationNat == 3, row_number(), 0L)) %>%
+    dplyr::mutate(mois_assec_consec = ifelse(RsObservationNat == 3, dplyr::row_number(), 0L)) %>%
     dplyr::group_by(Annee,CdSiteHydro) %>%
     dplyr::summarise(max_nb_mois_assec  = max(mois_assec_consec),.groups = "drop") %>%
     dplyr::mutate(max_nb_mois_assec = factor(max_nb_mois_assec,ordered = T)) %>%
@@ -176,8 +176,8 @@ produire_graph_historique_dpt <- function(onde_df,departement) {
                                title = c(paste0("Historique des observations pour les stations du d\u00e9partement ",num_dpt, " - R\u00e9seau ONDE")),
                                caption = paste("Source: r\u00e9seau ONDE (OFB)\n \u00a9OFB",
                                                format(Sys.time(), '%Y'), "- Date d\'\u00e9dition:",format(Sys.time(), '%d/%m/%Y'))) &
-    theme(plot.title = element_text(size = 8, face='bold'),
-          plot.tag = element_text(face = 'bold'))
+    theme(plot.title = ggplot2::element_text(size = 8, face='bold'),
+          plot.tag = ggplot2::element_text(face = 'bold'))
 
   plot_historique
 }
