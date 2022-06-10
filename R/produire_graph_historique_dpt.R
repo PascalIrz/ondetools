@@ -19,16 +19,17 @@
 #' produire_graph_historique_dpt(onde_df, departement =  '76')
 #'
 #' @importFrom data.table rleid
-#' @importFrom dplyr filter select group_by summarise n ungroup mutate arrange
+#' @importFrom dplyr filter mutate select group_by summarise n ungroup arrange row_number
 #' @importFrom forcats fct_rev
-#' @importFrom ggplot2 ggplot aes geom_text scale_size scale_x_continuous geom_line geom_point labs scale_y_continuous ggtitle theme_bw theme geom_bar position_stack scale_fill_brewer ylab xlab element_text
+#' @importFrom ggplot2 ggplot aes geom_tile scale_fill_gradientn geom_text scale_size scale_x_continuous element_text element_blank geom_line geom_point labs scale_y_continuous ggtitle theme_bw theme geom_bar position_stack scale_fill_brewer ylab xlab
 #' @importFrom glue glue
 #' @importFrom grDevices adjustcolor hcl.colors
-#' @importFrom lubridate month
+#' @importFrom lubridate ymd month
 #' @importFrom patchwork plot_layout plot_annotation
 #' @importFrom scales breaks_width percent_format percent
-#' @importFrom sf st_drop_geometry
+#' @importFrom sf st_as_sf st_drop_geometry
 #' @importFrom tidyr complete as_tibble
+#'
 produire_graph_historique_dpt <- function(onde_df,departement) {
 
   num_dpt <- departement
