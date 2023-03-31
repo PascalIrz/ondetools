@@ -1,2 +1,4 @@
-development:
-  mode: auto
+url: https://pascalirz.github.io/ondetools/
+template:
+  bootstrap: 5
+
