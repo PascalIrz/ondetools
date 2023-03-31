@@ -1,6 +1,6 @@
 Package: ondetools
 Type: Package
-Title: Package Pour Exploiter Les Données De La Base ONDE
+Title: Package R pour traiter les données ONDE de suivi des étiages en France
 Version: 0.1.2
 Date: 2023-03-31
 Author: Pascal Irz
