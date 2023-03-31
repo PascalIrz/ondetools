@@ -8,7 +8,11 @@ Maintainer: Pascal Irz <pascal.irz@ofb.gouv.fr>
 Description: Le package propose un ensemble de fonctions facilitant l'exploitation des données
     de l'Observatoire National des Etiages. En particulier, il permet une chaîne de traitement
     comprenant téléchargement, décompression et assemblage des fichiers annuels suivi d'une
-    visualisation des données associées à chaque station sur cartographie dynamique. 
+    visualisation des données associées à chaque station sur cartographie dynamique.
+    This package proposes a set of functions for easier processing of the ONDE monitoring data
+    on the intermittent streams of mainaln France. It allows streamlining a workflow for
+    downloading the annual data files, tidying them and displaying the results on an interactive
+    map.
 License: GPL-3 + file LICENSE
 Imports: data.table,
     dplyr,

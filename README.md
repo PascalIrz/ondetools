@@ -10,6 +10,8 @@
 
 Le package {ondetools} vise à faciliter le chargement et l'exploitation des données de [l'observatoire des étiages](https://www.data.gouv.fr/fr/datasets/observatoire-national-des-etiages/). Ces données sont [mises à disposition en ligne](https://onde.eaufrance.fr/content/t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e). Elles couvrent la France métropolitaine depuis 2012.
 
+This package proposes a set of functions for easier processing of the [ONDE monitoring data on the intermittent streams of mainland France](https://www.data.gouv.fr/fr/datasets/observatoire-national-des-etiages/). It allows streamlining a workflow for downloading the annual data files, tidying them and displaying the results on an interactive map. The data collection started in 2012.
+
 La logique suivie est celle d’une chaîne de traitements depuis le téléchargement des données brutes sur le web jusqu’à la visualisation cartographique.
 
 Il propose un ensemble de fonctions qui permettent de :
