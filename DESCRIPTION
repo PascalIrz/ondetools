@@ -1,7 +1,7 @@
 Package: ondetools
 Type: Package
 Title: Package Pour Exploiter Les Données De La Base ONDE
-Version: 0.1.1
+Version: 0.1.2
 Date: 2023-03-31
 Author: Pascal Irz
 Maintainer: Pascal Irz <pascal.irz@ofb.gouv.fr>
@@ -9,7 +9,7 @@ Description: Le package propose un ensemble de fonctions facilitant l'exploitati
     de l'Observatoire National des Etiages. En particulier, il permet une chaîne de traitement
     comprenant téléchargement, décompression et assemblage des fichiers annuels suivi d'une
     visualisation des données associées à chaque station sur cartographie dynamique. 
-License: GPL-3
+License: GPL-3 + file LICENSE
 Imports: data.table,
     dplyr,
     forcats,
@@ -23,12 +23,11 @@ Imports: data.table,
     sf,
     stringr,
     tidyr,
-    tidyverse,
     utils,
     xml2 
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Suggests: 
     knitr,
     rmarkdown

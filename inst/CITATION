@@ -13,7 +13,7 @@ citEntry(
   year     = year,
   volume   = note,
   url      = url,
-  textVersion = paste(
+  textVersion = paste0(
      "Irz, P. (",
       year,
      "). ",

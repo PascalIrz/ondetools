@@ -23,7 +23,7 @@
 #' stations = codes_stations)}
 #'
 #'
-completer_observations_mois_manquants <- function(onde_df, stations) {
+completer_observations_mois_manquants2 <- function(onde_df, stations) {
 
   onde_ts_mois <- onde_df %>%
     filter(CdSiteHydro %in% stations) %>%

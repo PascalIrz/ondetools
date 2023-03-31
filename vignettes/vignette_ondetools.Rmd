@@ -62,7 +62,7 @@ D'autres *packages* sont nécessaires, non pas au fonctionnement de {ondetools},
 Téléchargement :
 
 ```{r, eval = FALSE}
-install.packages(c("lubridate", "mapview", "sf", "tidyverse"))
+install.packages(c("lubridate", "mapview", "sf", "dplyr", "stringr", "ggplot2"))
 ```
 
 Installation :
@@ -71,7 +71,9 @@ Installation :
 library(lubridate)
 library(mapview)
 library(sf) 
-library(tidyverse)
+library(dplyr)
+library(stringr)
+library(ggplot2)
 ```
 
 Chaque fonction est accompagnée d'un fichier d'aide. Exemple :
