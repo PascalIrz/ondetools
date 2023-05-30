@@ -14,26 +14,33 @@ Description: Le package propose un ensemble de fonctions facilitant l'exploitati
     downloading the annual data files, tidying them and displaying the results on an interactive
     map.
 License: GPL-3 + file LICENSE
-Imports: data.table,
+Imports: 
+    cli,
+    data.table,
     dplyr,
     forcats,
+    furrr,
     ggplot2,
+    glue,
     leafpop,
     lubridate,
     magrittr,
     mapview,
+    progressr,
     purrr,
+    rmarkdown,
     rvest,
     sf,
     stringr,
     tidyr,
     utils,
-    xml2 
+    xml2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 Suggests: 
-    knitr,
-    rmarkdown
+    knitr
 VignetteBuilder: knitr
 URL: https://pascalirz.github.io/ondetools/
+Depends: 
+    R (>= 2.10)

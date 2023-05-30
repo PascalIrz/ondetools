@@ -1,0 +1,61 @@
+---
+title: "Bilan mensuel ONDE  \nObservatoire national des étiages  \nDépartement `r params$code_departement`"
+author: "OFB, DR `r params$region_dr`"
+date: "Campagnes de `r params$mois_rapport`  \nrapport créé le `r format(Sys.time(), '%d %B %Y')`"
+output: 
+  word_document:
+    reference_docx: "modele_word_rapport_OFB.docx"
+params:
+  onde_df: NULL
+  code_departement: NULL
+  annee_rapport: NULL
+  region_dr: NULL
+  mois_rapport: mois_rapport
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\newpage
+
+# Rappels ONDE : Informations générales pour le déroulement des campagnes d'acquisition de données
+
+Les stations d'observations du réseau ONDE sont majoritairement positionnées en tête de bassin pour apporter de l'information sur les situations hydrographiques non couvertes par d'autres dispositifs existants (à minima 30 stations par département). 
+
+Sur le terrain, le niveau d'écoulement des cours d'eau est apprécié visuellement selon **3 modalités** d'observation (selon la typologie nationale) :
+
+-   **<span custom-style="Ecoulement_style">Ecoulement visible</span>** : correspond à une station présentant un écoulement continu -- écoulement permanent et visible à l'œil nu.
+-   **Ecoulement visible faible** : correspond à une station sur laquelle il y a de l'eau et un courant visible mais le débit faible ne garantit pas un fonctionnement biologique.
+-   **<span custom-style="Ecoulement_nonvisible_style">Ecoulement non visible</span>
+** : correspond à une station sur laquelle le lit mineur présente toujours de l'eau mais le débit est nul.
+-   **<span custom-style="Assec_style">Assec</span>** : correspond à une station à sec, où l'eau est totalement évaporée ou infiltrée sur plus de 50% de la station.
+
+Le réseau ONDE s'organise selon deux types de suivis : **(i) un suivi usuel** (au milieu de chaque dernière décade du mois, le 25 ± 2 jours, entre fin mai et fin septembre), et **(ii) un suivi complémentaire** (déclenché selon la situation locale, jugée potentiellement sensible, à l'initiative des acteurs locaux).
+
+Pour plus d'informations : [Lien réseau eaufrance.fr](http://www.reseau.eaufrance.fr/ressource/note-technique-onde-accompagnant-courrier-deb)
+
+Des données des campagnes d'observations de 2012 à `r format(Sys.Date(),'%Y')` sont disponibles sur le site : [http://onde.eaufrance.fr](Lien%20onde%20eaufrance.fr)
+
+# Nombre de stations ONDE dans le département `r params$code_departement`
+
+Les stations du réseau ONDE sont majoritairement positionnées en tête de bassins versants pour compléter les données hydrologiques sur les chevelus hydrographiques non couverts par d'autres dispositifs existants, mais également pour apporter les informations disponibles auprès des gestionnaires de l'eau (banque [HYDRO](http://www.hydro.eaufrance.fr/) et [ADES](http://www.ades.eaufrance.fr/) par exemple).
+
+Le **département `r params$code_departement`** est couvert par **XX stations** d'observation. Pour chaque campagne d'observation usuelle, un indice ONDE peut être calculé selon la formule suivante :
+
+$$
+\text{Indice ONDE} = \frac{( 5 \times N2 + 10 \times N1)}{N}
+$$
+avec :
+
+  - *N* : nombre total de stations ;
+  - *N1* : écoulement continu ;
+  - *N2* : écoulement interrompu.
+
+\newpage
+
+# Situation mensuelle d’écoulement à l'échelle départementale
+
+La carte ci-dessous présente la situation d'écoulement du mois en cours (`r params$mois_rapport`) pour les stations du département `r params$code_departement`. 
+
+Les modalités d'écoulement correspondent à la typologie nationale, et peuvent prendre les valeurs suivantes: *<span custom-style="Ecoulement_style">écoulement visible</span>*, *<span custom-style="Assec_style">assec</span>*, *<span custom-style="Ecoulement_nonvisible_style">écoulement non visible</span>*, ou *observation impossible*.
