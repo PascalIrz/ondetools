@@ -9,39 +9,46 @@ params:
   onde_df: NULL
   code_departement: NULL
   annee_rapport: NULL
+  mois_rapport: NULL
   region_dr: NULL
-  mois_rapport: mois_rapport
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning=FALSE, 
+                      message=FALSE)
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+options(warn=-1)
+
+if(!require("tidyverse")) install.packages('tidyverse')
+if(!require("COGiter")) devtools::install_github("MaelTheuliere/COGiter")
+
 ```
 
 \newpage
 
-# Rappels ONDE : Informations générales pour le déroulement des campagnes d'acquisition de données
+# Rappels réseau ONDE : informations générales pour le déroulement des campagnes d'acquisition de données
 
-Les stations d'observations du réseau ONDE sont majoritairement positionnées en tête de bassin pour apporter de l'information sur les situations hydrographiques non couvertes par d'autres dispositifs existants (à minima 30 stations par département). 
-
-Sur le terrain, le niveau d'écoulement des cours d'eau est apprécié visuellement selon **3 modalités** d'observation (selon la typologie nationale) :
-
--   **<span custom-style="Ecoulement_style">Ecoulement visible</span>** : correspond à une station présentant un écoulement continu -- écoulement permanent et visible à l'œil nu.
--   **Ecoulement visible faible** : correspond à une station sur laquelle il y a de l'eau et un courant visible mais le débit faible ne garantit pas un fonctionnement biologique.
--   **<span custom-style="Ecoulement_nonvisible_style">Ecoulement non visible</span>
-** : correspond à une station sur laquelle le lit mineur présente toujours de l'eau mais le débit est nul.
--   **<span custom-style="Assec_style">Assec</span>** : correspond à une station à sec, où l'eau est totalement évaporée ou infiltrée sur plus de 50% de la station.
+Les stations d'observations du réseau ONDE sont majoritairement positionnées en tête de bassin pour apporter de l'information sur les situations hydrographiques non couvertes par d'autres dispositifs existants (banque [HYDRO](http://www.hydro.eaufrance.fr/) et [ADES](http://www.ades.eaufrance.fr/) par exemple). Environ 30 stations compose le réseau de chaque département. 
 
 Le réseau ONDE s'organise selon deux types de suivis : **(i) un suivi usuel** (au milieu de chaque dernière décade du mois, le 25 ± 2 jours, entre fin mai et fin septembre), et **(ii) un suivi complémentaire** (déclenché selon la situation locale, jugée potentiellement sensible, à l'initiative des acteurs locaux).
 
-Pour plus d'informations : [Lien réseau eaufrance.fr](http://www.reseau.eaufrance.fr/ressource/note-technique-onde-accompagnant-courrier-deb)
+Sur le terrain, la situation d'écoulement des cours d'eau est appréciée visuellement selon **plusieurs modalités** d'observation avec la **typologie nationale** :
 
-Des données des campagnes d'observations de 2012 à `r format(Sys.Date(),'%Y')` sont disponibles sur le site : [http://onde.eaufrance.fr](Lien%20onde%20eaufrance.fr)
+-   **<span custom-style="Ecoulement_style">Ecoulement visible</span>**: correspond à une station présentant un écoulement continu -- écoulement permanent et visible à l'œil nu.
+-   **<span custom-style="Ecoulement_nonvisible_style">Ecoulement non visible</span>
+**: correspond à une station sur laquelle le lit mineur présente toujours de l'eau mais le débit est nul.
+-   **<span custom-style="Assec_style">Assec</span>**: correspond à une station à sec, où l'eau est totalement évaporée ou infiltrée sur plus de 50% de la station.
+
+Un autre modalité - **<span custom-style="Ecoul_visible_faible">Ecoulement visible faible</span>** - est parfois utilisée sur le terrain (distinction avec la modalité **<span custom-style="Ecoulement_style">Ecoulement visible acceptable</span>**). Elle apparaît dans la **typologie départementale** ; et correspond à une station sur laquelle il y a de l'eau et un courant visible, mais le débit faible ne garantit pas un fonctionnement biologique.
+
+A noter que la modalité **observation impossible** peut également être renseignée, dès lors que l'observation n'a pu être réalisée correctement en raison de conditions exceptionnelles (problèmes d'accessibilité, modification des conditions environnementales de la station, etc ...).
+
+Pour plus d'informations : [Lien réseau ONDE (http://onde.eaufrance.fr)](https://onde.eaufrance.fr/).
 
 # Nombre de stations ONDE dans le département `r params$code_departement`
 
-Les stations du réseau ONDE sont majoritairement positionnées en tête de bassins versants pour compléter les données hydrologiques sur les chevelus hydrographiques non couverts par d'autres dispositifs existants, mais également pour apporter les informations disponibles auprès des gestionnaires de l'eau (banque [HYDRO](http://www.hydro.eaufrance.fr/) et [ADES](http://www.ades.eaufrance.fr/) par exemple).
-
-Le **département `r params$code_departement`** est couvert par **XX stations** d'observation. Pour chaque campagne d'observation usuelle, un indice ONDE peut être calculé selon la formule suivante :
+Le **département `r params$code_departement`** est couvert par **XX stations** d'observation. Pour chaque campagne usuelle d'observation, un indice ONDE peut être calculé selon la formule suivante :
 
 $$
 \text{Indice ONDE} = \frac{( 5 \times N2 + 10 \times N1)}{N}
@@ -56,6 +63,84 @@ avec :
 
 # Situation mensuelle d’écoulement à l'échelle départementale
 
+## Typologie nationale
+
 La carte ci-dessous présente la situation d'écoulement du mois en cours (`r params$mois_rapport`) pour les stations du département `r params$code_departement`. 
 
-Les modalités d'écoulement correspondent à la typologie nationale, et peuvent prendre les valeurs suivantes: *<span custom-style="Ecoulement_style">écoulement visible</span>*, *<span custom-style="Assec_style">assec</span>*, *<span custom-style="Ecoulement_nonvisible_style">écoulement non visible</span>*, ou *observation impossible*.
+Les modalités d'écoulement correspondent à la **typologie nationale**, et peuvent prendre les valeurs suivantes: *<span custom-style="Ecoulement_style">écoulement visible</span>*, *<span custom-style="Assec_style">assec</span>*, *<span custom-style="Ecoulement_nonvisible_style">écoulement non visible</span>*, ou *observation impossible*.
+
+```{r map dpt, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5.5, dpi=300}
+
+date_proche <- 
+  as.Date(paste0(params$mois_rapport,'_28'),format = "%B %Y_%d")
+
+onde_df_sel <-
+  params$onde_df %>%
+  dplyr::mutate(DtRealObservation = as.Date(DtRealObservation)) %>%
+  dplyr::filter(CdSiteHydro %in%
+                  ({# selection des dernières stations actives
+                    params$onde_df %>%
+                      dplyr::filter(CdDepartement == params$code_departement) %>%
+                      dplyr::filter(Annee == params$annee_rapport) %>%
+                      dplyr::filter(TypeCampObservations == 'usuelle') %>%
+                      dplyr::mutate(DtRealObservation = as.Date(DtRealObservation)) %>%
+                      dplyr::group_by(CdSiteHydro, LbSiteHydro) %>%
+                      dplyr::filter(DtRealObservation == dplyr::last(DtRealObservation)) %>%
+                      dplyr::pull(CdSiteHydro)})
+  ) %>%
+  dplyr::filter(DtRealObservation < date_proche) %>% 
+  dplyr::mutate(diff_date = abs(date_voulue - DtRealObservation)) %>%
+  dplyr::group_by(CdSiteHydro) %>%
+  dplyr::filter(diff_date == min(diff_date))
+
+dptFR <-
+  COGiter::departements_geo %>%
+  dplyr::left_join(COGiter::departements %>%
+                     dplyr::select(DEP, REG, NOM_DEP))
+
+produire_carte_statique(code_departement = params$code_departement,
+                        onde_df_mois = onde_df_sel,
+                        referentiel_onde = 'Typologie nationale',
+                        couleurs = onde_4mod,
+                        dptFR_shp = dptFR)
+
+
+```
+
+## Typologie départementale
+
+```{r map dpt 2, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5.5, dpi=300}
+produire_carte_statique(code_departement = params$code_departement,
+                        onde_df_mois = onde_df_sel,
+                        referentiel_onde = 'Typologie départementale',
+                        couleurs = onde_5mod,
+                        dptFR_shp = dptFR)
+```
+
+
+
+
+
+
+\newpage
+
+# Analyse pluriannuelle à l'échelle départementale
+## Historique de variation de l'indice ONDE
+
+\newpage
+
+## Historique des assecs
+
+\newpage
+
+## Historique des observations des stations regroupées par bassins versants
+
+\newpage
+
+## Commentaires spécifiques
+
+:::{custom-style="Style1"}
+
+Ajouter les éventuels commentaires ici
+
+:::

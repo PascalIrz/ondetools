@@ -8,3 +8,4 @@
 ^doc$
 ^\.github/workflows$
 ^dev/dev_history_file\.R$
+^dev$
