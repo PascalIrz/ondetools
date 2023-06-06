@@ -22,7 +22,6 @@ options(warn=-1)
 
 if(!require("tidyverse")) install.packages('tidyverse')
 if(!require("COGiter")) devtools::install_github("MaelTheuliere/COGiter")
-
 ```
 
 \newpage
@@ -48,7 +47,7 @@ Pour plus d'informations : [Lien réseau ONDE (http://onde.eaufrance.fr)](https:
 
 # Nombre de stations ONDE dans le département `r params$code_departement`
 
-Le **département `r params$code_departement`** est couvert par **XX stations** d'observation. Pour chaque campagne usuelle d'observation, un indice ONDE peut être calculé selon la formule suivante :
+Le **département `r params$code_departement`** est couvert par **XX stations** d'observations. Pour chaque campagne usuelle, un indice ONDE peut être calculé selon la formule suivante :
 
 $$
 \text{Indice ONDE} = \frac{( 5 \times N2 + 10 \times N1)}{N}
@@ -71,51 +70,45 @@ Les modalités d'écoulement correspondent à la **typologie nationale**, et peu
 
 ```{r map dpt, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5.5, dpi=300}
 
-date_proche <- 
-  as.Date(paste0(params$mois_rapport,'_28'),format = "%B %Y_%d")
-
-onde_df_sel <-
-  params$onde_df %>%
-  dplyr::mutate(DtRealObservation = as.Date(DtRealObservation)) %>%
-  dplyr::filter(CdSiteHydro %in%
-                  ({# selection des dernières stations actives
-                    params$onde_df %>%
-                      dplyr::filter(CdDepartement == params$code_departement) %>%
-                      dplyr::filter(Annee == params$annee_rapport) %>%
-                      dplyr::filter(TypeCampObservations == 'usuelle') %>%
-                      dplyr::mutate(DtRealObservation = as.Date(DtRealObservation)) %>%
-                      dplyr::group_by(CdSiteHydro, LbSiteHydro) %>%
-                      dplyr::filter(DtRealObservation == dplyr::last(DtRealObservation)) %>%
-                      dplyr::pull(CdSiteHydro)})
-  ) %>%
-  dplyr::filter(DtRealObservation < date_proche) %>% 
-  dplyr::mutate(diff_date = abs(date_voulue - DtRealObservation)) %>%
-  dplyr::group_by(CdSiteHydro) %>%
-  dplyr::filter(diff_date == min(diff_date))
-
-dptFR <-
-  COGiter::departements_geo %>%
-  dplyr::left_join(COGiter::departements %>%
-                     dplyr::select(DEP, REG, NOM_DEP))
-
-produire_carte_statique(code_departement = params$code_departement,
-                        onde_df_mois = onde_df_sel,
-                        referentiel_onde = 'Typologie nationale',
-                        couleurs = onde_4mod,
-                        dptFR_shp = dptFR)
-
+# date_proche <- 
+#   as.Date(paste0(params$mois_rapport,'_28'),format = "%B %Y_%d")
+# 
+# onde_df_sel <-
+#   params$onde_df %>%
+#   dplyr::mutate(DtRealObservation = as.Date(DtRealObservation)) %>%
+#   dplyr::filter(CdSiteHydro %in%
+#                   ({# selection des dernières stations actives
+#                     params$onde_df %>%
+#                       dplyr::filter(CdDepartement == params$code_departement) %>%
+#                       dplyr::filter(Annee == params$annee_rapport) %>%
+#                       dplyr::filter(TypeCampObservations == 'usuelle') %>%
+#                       dplyr::mutate(DtRealObservation = as.Date(DtRealObservation)) %>%
+#                       dplyr::group_by(CdSiteHydro, LbSiteHydro) %>%
+#                       dplyr::filter(DtRealObservation == dplyr::last(DtRealObservation)) %>%
+#                       dplyr::pull(CdSiteHydro)})
+#   ) %>%
+#   dplyr::filter(DtRealObservation < date_proche) %>% 
+#   dplyr::mutate(diff_date = abs(date_voulue - DtRealObservation)) %>%
+#   dplyr::group_by(CdSiteHydro) %>%
+#   dplyr::filter(diff_date == min(diff_date))
+# 
+# dptFR <-
+#   COGiter::departements_geo %>%
+#   dplyr::left_join(COGiter::departements %>%
+#                      dplyr::select(DEP, REG, NOM_DEP))
+# 
+# produire_carte_statique(code_departement = params$code_departement,
+#                         onde_df_mois = onde_df_sel,
+#                         referentiel_onde = 'Typologie nationale',
+#                         couleurs = onde_4mod,
+#                         dptFR_shp = dptFR)
+# 
 
 ```
 
 ## Typologie départementale
 
-```{r map dpt 2, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5.5, dpi=300}
-produire_carte_statique(code_departement = params$code_departement,
-                        onde_df_mois = onde_df_sel,
-                        referentiel_onde = 'Typologie départementale',
-                        couleurs = onde_5mod,
-                        dptFR_shp = dptFR)
-```
+
 
 
 

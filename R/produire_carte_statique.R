@@ -170,7 +170,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
     ) +
     ggplot2::ggtitle(
       label = glue::glue(
-        'R\u00e9seau ONDE - {unique(dpt_shp$NOM_DEP)} {unique(lubridate::month(onde_df_mois$DtRealObservation,label = T, locale = \"fr_FR\"))} {unique(lubridate::year(onde_df_mois$DtRealObservation))} - {referentiel_onde}'
+        'R\u00e9seau ONDE - {unique(dpt_shp$NOM_DEP)} - {unique(lubridate::month(onde_df_mois$DtRealObservation,label = T, locale = \"fr_FR\"))} {unique(lubridate::year(onde_df_mois$DtRealObservation))} - {referentiel_onde}'
       )
     ) +
     ggplot2::theme_void() +

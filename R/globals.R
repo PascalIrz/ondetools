@@ -38,6 +38,12 @@ utils::globalVariables(
     'code_departement',
     'code_station',
     'date_campagne',
-    'libelle_ecoulement'
+    'libelle_ecoulement',
+    'indice',
+    'libelle_type_campagne',
+    'nb_NA',
+    'nb_ecoul_cont',
+    'nb_ecoul_interr',
+    'nb_sta'
   )
 )

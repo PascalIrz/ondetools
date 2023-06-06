@@ -3,6 +3,7 @@
 export(ajouter_donnees_assecs_aux_stations)
 export(assembler_fichiers_onde_annuels_csv)
 export(calculer_assecs_ete)
+export(calculer_indice_onde)
 export(completer_observations_mois_manquants)
 export(creer_couche_geo_stations)
 export(creer_variable_Mois)
