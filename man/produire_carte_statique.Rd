@@ -20,7 +20,7 @@ produire_carte_statique(
 \item{referentiel_onde}{la typologie à utiliser,
 soit \code{Typologie nationale} ou \code{Typologie départementale}}
 
-\item{couleurs}{un vecteur de couleur correspond aux référentiels
+\item{couleurs}{un vecteur de couleurs correspondant aux référentiels
 national ou départemental}
 
 \item{dptFR_shp}{une couche shape pour les départements FR}
@@ -33,22 +33,21 @@ Produire une carte départementale de la situation mensuelle des observations ON
 }
 \examples{
 \dontrun{
-
 dptFR <-
   COGiter::departements_geo \%>\%
   dplyr::left_join(COGiter::departements \%>\%
                      dplyr::select(DEP, REG, NOM_DEP))
 
-produire_carte_statique(code_departement = '76',
-                        onde_df_mois = onde_df_sel,
-                        referentiel_onde = 'Typologie nationale',
-                        couleurs = onde_4mod,
-                        dptFR_shp = dptFR)
+produire_carte_statique(code_departement = '27',
+                         onde_df_mois = onde_df_mois2,
+                         referentiel_onde = 'Typologie départementale',
+                         couleurs = onde_5mod,
+                         dptFR_shp = dptFR)
 
-produire_carte_statique(code_departement = '76',
-                        onde_df_mois = onde_df_sel,
-                        referentiel_onde = 'Typologie départementale',
-                        couleurs = onde_5mod,
-                        dptFR_shp = dptFR)
+produire_carte_statique(code_departement = '27',
+                         onde_df_mois = onde_df_mois2,
+                         referentiel_onde = 'Typologie nationale',
+                         couleurs = onde_4mod,
+                         dptFR_shp = dptFR)
 }
 }

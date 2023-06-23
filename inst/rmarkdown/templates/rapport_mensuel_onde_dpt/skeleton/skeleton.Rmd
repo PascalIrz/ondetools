@@ -1,7 +1,7 @@
 ---
 title: "Bilan mensuel ONDE  \nObservatoire national des étiages  \nDépartement `r params$code_departement`"
 author: "OFB, DR `r params$region_dr`"
-date: "Campagnes de `r params$mois_rapport`  \nrapport créé le `r format(Sys.time(), '%d %B %Y')`"
+date: "Campagne `r params$type_rapport` de `r params$mois_rapport`  \nrapport créé le `r format(Sys.time(), '%d %B %Y')`"
 output: 
   word_document:
     reference_docx: "modele_word_rapport_OFB.docx"
@@ -11,6 +11,7 @@ params:
   annee_rapport: NULL
   mois_rapport: NULL
   region_dr: NULL
+  type_rapport: NULL
 ---
 
 ```{r setup, include=FALSE}
@@ -45,9 +46,108 @@ A noter que la modalité **observation impossible** peut également être rensei
 
 Pour plus d'informations : [Lien réseau ONDE (http://onde.eaufrance.fr)](https://onde.eaufrance.fr/).
 
+# test rapport
+
+```{r}
+if(params$type_rapport != 'usuelle') {print("Campagne complémentaire")} else {print("Campagne usuelle")} 
+```
+
 # Nombre de stations ONDE dans le département `r params$code_departement`
 
-Le **département `r params$code_departement`** est couvert par **XX stations** d'observations. Pour chaque campagne usuelle, un indice ONDE peut être calculé selon la formule suivante :
+```{r, include=FALSE, echo=FALSE}
+### prétraitement sur le département
+nb_stations <- params$onde_df %>% 
+  dplyr::filter(code_departement == params$code_departement & libelle_type_campagne == 'usuelle') %>% 
+  dplyr::mutate(code_campagne = as.numeric(code_campagne)) %>% 
+  dplyr::filter(code_campagne == max(code_campagne)) %>% 
+  dplyr::pull(code_station) %>% 
+  unique() %>% 
+  length()
+
+date_derniere_campagne_usuelle <- params$onde_df %>% 
+  dplyr::filter(libelle_type_campagne == 'usuelle') %>% 
+  dplyr::filter(code_departement == params$code_departement) %>% 
+  dplyr::mutate(code_campagne = as.numeric(code_campagne)) %>% 
+  dplyr::filter(code_campagne == max(code_campagne)) %>% 
+  dplyr::pull(date_campagne) %>% 
+  unique()
+
+date_derniere_campagne_usuelle <- format(date_derniere_campagne_usuelle, '%d/%m/%Y')
+  
+date_derniere_campagne_compl <- params$onde_df %>% 
+  dplyr::filter(libelle_type_campagne == 'complémentaire') %>% 
+  dplyr::filter(code_departement == params$code_departement) %>% 
+  dplyr::mutate(code_campagne = as.numeric(code_campagne)) %>% 
+  dplyr::filter(code_campagne == max(code_campagne)) %>% 
+  dplyr::pull(date_campagne) %>% 
+  unique()
+
+date_derniere_campagne_compl <- format(date_derniere_campagne_compl, '%d/%m/%Y')
+
+### tableau pour le mois en cours selectionné
+mois_sel <- format(lubridate::ym(annee_mois), "%m")
+annee_sel <- format(lubridate::ym(annee_mois), "%Y")
+
+onde_df_mois <-
+  params$onde_df %>% 
+  dplyr::filter(code_departement == params$code_departement) %>% 
+  dplyr::mutate(Mois = format(as.Date(date_campagne), "%m")) %>% 
+  dplyr::filter(Mois == mois_sel & Annee == annee_sel & libelle_type_campagne == params$type_rapport) %>% 
+  dplyr::filter(code_campagne == max(as.numeric(code_campagne)))
+
+### dpt shape
+dptFR <-
+  COGiter::departements_geo %>%
+  dplyr::left_join(COGiter::departements %>%
+                     dplyr::select(DEP, REG, NOM_DEP))
+```
+
+Actuellement, le **département `r params$code_departement`** est couvert par **`r nb_stations` stations** d'observations. 
+
+Pour le département, les dernières campagnes :
+
+- **usuelles** ont été réalisées le : *`r date_derniere_campagne_usuelle`* ;
+
+- **complémentaires** ont été réalisées le : *`r date_derniere_campagne_compl`*.
+
+\newpage
+
+# Situation mensuelle d’écoulement à l'échelle départementale
+
+Les cartes ci-dessous présentent les situations observées sur les stations du **département `r params$code_departement`** pour la campagne **`r params$type_rapport` du mois de `r params$mois_rapport`**. 
+
+### Typologie nationale
+
+Les modalités d'écoulement de la **typologie nationale** peuvent prendre les valeurs suivantes: *<span custom-style="Ecoulement_style">écoulement visible</span>*, *<span custom-style="Ecoulement_nonvisible_style">écoulement non visible</span>*, *<span custom-style="Assec_style">assec</span>*, ou *observation impossible*.
+
+```{r map dpt nat, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5.5, dpi=300}
+produire_carte_statique(code_departement = params$code_departement,
+                        onde_df_mois = onde_df_mois,
+                        referentiel_onde = 'Typologie nationale',
+                        couleurs = onde_4mod,
+                        dptFR_shp = dptFR)
+
+```
+
+### Typologie départementale
+
+Les modalités d'écoulement de la **typologie départementale** correspondent à : *<span custom-style="Ecoulement_style">écoulement visible acceptable</span>*, *<span custom-style="Ecoul_visible_faible">écoulement visible faible</span>*, *<span custom-style="Ecoulement_nonvisible_style">écoulement non visible</span>*, *<span custom-style="Assec_style">assec</span>*, ou *observation impossible*.
+
+```{r map dpt dpt, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5.5, dpi=300}
+produire_carte_statique(code_departement = params$code_departement,
+                        onde_df_mois = onde_df_mois,
+                        referentiel_onde = 'Typologie départementale',
+                        couleurs = onde_5mod,
+                        dptFR_shp = dptFR)
+
+```
+
+\newpage
+
+# Analyse pluriannuelle à l'échelle départementale
+## Indices ONDE
+
+Pour chaque campagne usuelle, un indice ONDE peut être calculé selon la formule suivante :
 
 $$
 \text{Indice ONDE} = \frac{( 5 \times N2 + 10 \times N1)}{N}
@@ -58,66 +158,6 @@ avec :
   - *N1* : écoulement continu ;
   - *N2* : écoulement interrompu.
 
-\newpage
-
-# Situation mensuelle d’écoulement à l'échelle départementale
-
-## Typologie nationale
-
-La carte ci-dessous présente la situation d'écoulement du mois en cours (`r params$mois_rapport`) pour les stations du département `r params$code_departement`. 
-
-Les modalités d'écoulement correspondent à la **typologie nationale**, et peuvent prendre les valeurs suivantes: *<span custom-style="Ecoulement_style">écoulement visible</span>*, *<span custom-style="Assec_style">assec</span>*, *<span custom-style="Ecoulement_nonvisible_style">écoulement non visible</span>*, ou *observation impossible*.
-
-```{r map dpt, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5.5, dpi=300}
-
-# date_proche <- 
-#   as.Date(paste0(params$mois_rapport,'_28'),format = "%B %Y_%d")
-# 
-# onde_df_sel <-
-#   params$onde_df %>%
-#   dplyr::mutate(DtRealObservation = as.Date(DtRealObservation)) %>%
-#   dplyr::filter(CdSiteHydro %in%
-#                   ({# selection des dernières stations actives
-#                     params$onde_df %>%
-#                       dplyr::filter(CdDepartement == params$code_departement) %>%
-#                       dplyr::filter(Annee == params$annee_rapport) %>%
-#                       dplyr::filter(TypeCampObservations == 'usuelle') %>%
-#                       dplyr::mutate(DtRealObservation = as.Date(DtRealObservation)) %>%
-#                       dplyr::group_by(CdSiteHydro, LbSiteHydro) %>%
-#                       dplyr::filter(DtRealObservation == dplyr::last(DtRealObservation)) %>%
-#                       dplyr::pull(CdSiteHydro)})
-#   ) %>%
-#   dplyr::filter(DtRealObservation < date_proche) %>% 
-#   dplyr::mutate(diff_date = abs(date_voulue - DtRealObservation)) %>%
-#   dplyr::group_by(CdSiteHydro) %>%
-#   dplyr::filter(diff_date == min(diff_date))
-# 
-# dptFR <-
-#   COGiter::departements_geo %>%
-#   dplyr::left_join(COGiter::departements %>%
-#                      dplyr::select(DEP, REG, NOM_DEP))
-# 
-# produire_carte_statique(code_departement = params$code_departement,
-#                         onde_df_mois = onde_df_sel,
-#                         referentiel_onde = 'Typologie nationale',
-#                         couleurs = onde_4mod,
-#                         dptFR_shp = dptFR)
-# 
-
-```
-
-## Typologie départementale
-
-
-
-
-
-
-
-
-\newpage
-
-# Analyse pluriannuelle à l'échelle départementale
 ## Historique de variation de l'indice ONDE
 
 \newpage
