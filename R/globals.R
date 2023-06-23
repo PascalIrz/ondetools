@@ -44,6 +44,10 @@ utils::globalVariables(
     'nb_NA',
     'nb_ecoul_cont',
     'nb_ecoul_interr',
-    'nb_sta'
+    'nb_sta',
+    'Couleur_3mod',
+    'Couleur_4mod',
+    'lib_ecoul3mod',
+    'lib_ecoul4mod'
   )
 )

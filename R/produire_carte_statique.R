@@ -164,7 +164,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
       ),
       subtitle = glue::glue('{referentiel_onde}')
     ) +
-    ggplot2::labs(caption = paste("Source: ONDE (OFB)\n ©OFB", format(Sys.time(), '%Y'), "- Date d'édition:", format(Sys.time(), '%d/%m/%Y'))) +
+    ggplot2::labs(caption = paste("Source: ONDE (OFB)\n \u00a9OFB", format(Sys.time(), '%Y'), "- Date d\'\u00e9dition:", format(Sys.time(), '%d/%m/%Y'))) +
     ggplot2::theme_void() +
     ggplot2::theme(
       legend.text = ggplot2::element_text(size = 10),
