@@ -84,7 +84,8 @@ produire_carte_statique <- function(onde_df_mois = NULL,
     }) %>%
     sf::st_as_sf(coords = c("longitude", "latitude"),
                  crs = 4326) %>%
-    sf::st_transform(crs = 2154) %>% dplyr::mutate(
+    sf::st_transform(crs = 2154) %>%
+    dplyr::mutate(
       lib_ecoul3mod = dplyr::case_when(
         libelle_ecoulement == 'Ecoulement visible faible' ~ 'Ecoulement visible',
         libelle_ecoulement == 'Ecoulement visible acceptable' ~ 'Ecoulement visible',
@@ -160,7 +161,7 @@ produire_carte_statique <- function(onde_df_mois = NULL,
     ) +
     ggplot2::ggtitle(
       label = glue::glue(
-        'R\u00e9seau ONDE - {unique(onde_df_mois$libelle_departement)} - Campagne {unique(onde_df_mois2$libelle_type_campagne)} {unique(lubridate::month(onde_df_mois$date_campagne,label = T, locale = \"fr_FR\"))} {unique(lubridate::year(onde_df_mois$date_campagne))}'
+        'R\u00e9seau ONDE - {unique(onde_df_mois$libelle_departement)} - Campagne {unique(onde_df_mois$libelle_type_campagne)} {unique(lubridate::month(onde_df_mois$date_campagne,label = T, locale = \"fr_FR\"))} {unique(lubridate::year(onde_df_mois$date_campagne))}'
       ),
       subtitle = glue::glue('{referentiel_onde}')
     ) +

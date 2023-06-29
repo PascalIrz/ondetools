@@ -48,6 +48,10 @@ utils::globalVariables(
     'Couleur_3mod',
     'Couleur_4mod',
     'lib_ecoul3mod',
-    'lib_ecoul4mod'
+    'lib_ecoul4mod',
+    'NB',
+    'frq',
+    'Label_p',
+    'Mois_c'
   )
 )

@@ -21,6 +21,7 @@ Imports:
     forcats,
     furrr,
     ggplot2,
+    ggrepel,
     ggspatial,
     glue,
     hubeau (>= 0.4.1),
@@ -30,6 +31,7 @@ Imports:
     mapview,
     progressr,
     purrr,
+    rlang,
     rmarkdown,
     rvest,
     sf,
@@ -42,10 +44,11 @@ LazyData: true
 LazyDataCompression: bzip2
 RoxygenNote: 7.2.3
 Suggests: 
-    knitr
+    knitr,
+    flextable
 VignetteBuilder: knitr
 URL: https://pascalirz.github.io/ondetools/
 Depends: 
     R (>= 2.10)
-Remotes:  
+Remotes: 
     inrae/hubeau

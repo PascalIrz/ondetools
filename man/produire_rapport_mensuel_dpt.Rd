@@ -9,6 +9,7 @@ produire_rapport_mensuel_dpt(
   code_departement,
   annee_mois,
   region_dr,
+  complementaire = FALSE,
   dossier_sortie = getwd()
 )
 }
@@ -22,6 +23,9 @@ une liste de départements pour plusieurs rapports (ex: \code{c('14', '27', '76'
 
 \item{region_dr}{le nom de la DR qui sera affichée sur la page de garde du
 rapport}
+
+\item{complementaire}{booléen, si TRUE génère un rapport pour une campagne complémentaire.
+par défaut FALSE.}
 
 \item{dossier_sortie}{le dossier de sortie où le rapport sera stocké. Par défaut,
 le dossier de travail \code{getwd()}}
@@ -40,14 +44,17 @@ produire_rapport_mensuel_dpt(onde_df = donnees_onde,
                              code_departement = '02',
                              annee_mois = "2022_05",
                              region_dr = 'Hauts-de-France',
+                             complementaire = F,
                              dossier_sortie = "./OUTPUT")
 
-Rapports pour plusieurs départements (ex: 14, 27, 76) pour le mois de juin 2023 ('2023_06')
+Rapports pour plusieurs départements (ex: 14, 27, 76) pour des complémentaires
+  du mois de juin 2023 ('2023_06')
 
 produire_rapport_mensuel_dpt(onde_df = donnees_onde,
                              code_departement = c('14', '27', '76'),
                              annee_mois = "2022_06",
                              region_dr = 'Normandie',
+                             complementaire = T,
                              dossier_sortie = "./OUTPUT")
 }
 }

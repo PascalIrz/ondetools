@@ -4,10 +4,13 @@
 \alias{calculer_indice_onde}
 \title{Fonction pour calculer les indices ONDE sur les campagnes usuelles}
 \usage{
-calculer_indice_onde(onde_df = NULL)
+calculer_indice_onde(onde_df = NULL, force_complementaire = F)
 }
 \arguments{
-\item{onde_df}{un tableau de données onde}
+\item{onde_df}{un tableau de données onde téléchargé avec la fonction \code{telecharger_donnees_onde_api}}
+
+\item{force_complementaire}{argument booléen. Si \code{TRUE}, force le calcul des indices sur toutes les campagnes
+(usuelles et complémentaires avec un minimum de 25 observations par campagne). Par défaut, égal à \code{FALSE}}
 }
 \value{
 retourne un tableau avec une colonne 'indice'
