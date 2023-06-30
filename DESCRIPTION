@@ -34,6 +34,7 @@ Imports:
     rlang,
     rmarkdown,
     rvest,
+    scales,
     sf,
     stringr,
     tidyr,
@@ -45,7 +46,8 @@ LazyDataCompression: bzip2
 RoxygenNote: 7.2.3
 Suggests: 
     knitr,
-    flextable
+    flextable,
+    patchwork
 VignetteBuilder: knitr
 URL: https://pascalirz.github.io/ondetools/
 Depends: 

@@ -22,6 +22,7 @@ knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
 options(warn=-1)
 
 if(!require("tidyverse")) install.packages('tidyverse')
+if(!require("patchwork")) install.packages('patchwork')
 if(!require("COGiter")) devtools::install_github("MaelTheuliere/COGiter")
 ```
 
@@ -145,7 +146,7 @@ Les cartes ci-dessous présentent les situations observées sur les stations du 
 
 Les modalités d'écoulement de la **typologie nationale** peuvent prendre les valeurs suivantes: *<span custom-style="Ecoulement_style">écoulement visible</span>*, *<span custom-style="Ecoulement_nonvisible_style">écoulement non visible</span>*, *<span custom-style="Assec_style">assec</span>*, ou *observation impossible*.
 
-```{r map dpt nat, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5.5, dpi=300}
+```{r map dpt nat, results='asis', echo=FALSE, crop=T, fig.width=5, fig.height=5, dpi=300}
 produire_carte_statique(code_departement = params$code_departement,
                         onde_df_mois = onde_df_mois,
                         referentiel_onde = 'Typologie nationale',
@@ -154,7 +155,7 @@ produire_carte_statique(code_departement = params$code_departement,
 
 ```
 
-```{r bilan ecoulement annee nat, results='asis', echo=FALSE, fig.width=6, fig.height=3.5, dpi=300}
+```{r bilan ecoulement annee nat, results='asis', echo=FALSE, fig.width=5.5, fig.height=3.2, dpi=300}
 produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_annee_nat,
                                lib_ecoulement = lib_ecoul,
                                historique = F) +
@@ -162,11 +163,13 @@ produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_annee_nat,
 
 ```
 
+\newpage
+
 ### Typologie départementale
 
 Les modalités d'écoulement de la **typologie départementale** correspondent à : *<span custom-style="Ecoulement_style">écoulement visible acceptable</span>*, *<span custom-style="Ecoul_visible_faible">écoulement visible faible</span>*, *<span custom-style="Ecoulement_nonvisible_style">écoulement non visible</span>*, *<span custom-style="Assec_style">assec</span>*, ou *observation impossible*.
 
-```{r map dpt dpt, results='asis', echo=FALSE, crop=T, fig.width=5.5, fig.height=5, dpi=300}
+```{r map dpt dpt, results='asis', echo=FALSE, crop=T, fig.width=5, fig.height=5, dpi=300}
 produire_carte_statique(code_departement = params$code_departement,
                         onde_df_mois = onde_df_mois,
                         referentiel_onde = 'Typologie départementale',
@@ -175,7 +178,7 @@ produire_carte_statique(code_departement = params$code_departement,
 
 ```
 
-```{r bilan ecoulement annee dpt, results='asis', echo=FALSE, fig.width=5.5, fig.height=3.5, dpi=300}
+```{r bilan ecoulement annee dpt, results='asis', echo=FALSE, fig.width=5.5, fig.height=3.2, dpi=300}
 produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_annee_dpt,
                                lib_ecoulement = lib_ecoul,
                                historique = F) +
@@ -259,10 +262,71 @@ produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_historique,
                                historique = T)
 ```
 
-
 \newpage
 
 ## Historique des assecs
+
+L'historique des assecs peut être appréhender avec les 3 graphiques suivants :
+
+- Le graphique **a)** permet de visualiser simultanément la fréquence des assecs sur la période estivale (de mai à septembre inclus) en fonction des années. Le pourcentage de *stations d'observation en assec* est calculé par le rapport entre le nombre de stations ayant la <span custom-style="Assec_style">*modalité assec*</span> et le nombre de stations observées dans le mois.
+
+- Le graphique **b)** permet de visualiser la moyenne annuelle des stations en assecs (c.a.d les variations interannuelles).
+
+- Le graphique **c)** illustre la durée des assecs pour les stations du département sur la période estivale (de mai à septembre inclus). La durée des assecs pour une station est calculée selon le nombre de mois consécutifs où des observations avec la <span custom-style="Assec_style">*modalité assec*</span> est rapportée. La plus grande séquence d'observation en assec est gardée pour le calcul de la durée (rq. *entre observations successives, l'écoulement peut revenir visible*). Ainsi, les durées en assec peuvent aller de 0 mois (c.à.d. des écoulements toujours visibles et consécutivement observés sur la période estivale) à 5 mois (c.à.d.  des assecs toujours observés sur la période estivale). Le pourcentage représenté par chaque classe de durée est calculé pour chaque année d'observation. 
+
+```{r historique, results='asis', echo=FALSE, fig.width=6.5, fig.height=8, dpi=300}
+
+partA <-
+## graph a)
+params$onde_df %>%
+  dplyr::filter(code_departement == params$code_departement) %>% 
+  calculer_assecs_heatmap(onde_df = .) %>% 
+  produire_graph_heatmap_assecs(heatmap_df = ., autoscale = T)
+
+partB <-
+## graph b)
+params$onde_df %>%
+  dplyr::filter(code_departement == params$code_departement) %>% 
+  calculer_assecs_heatmap(onde_df = .) %>% 
+  dplyr::group_by(Annee) %>% 
+  dplyr::summarise(pc_assec_usuelles = mean(pourcentage_assecs, na.rm = T)/100) %>% 
+  {
+    ggplot2::ggplot(data = .,
+                    aes(x = Annee, y = pc_assec_usuelles)) +
+      ggplot2::geom_line(col = "#c20000") +
+      ggplot2::geom_point(fill = "#c20000", pch= 21, size=3) +
+      ggplot2::labs(x = "Années",
+                    y = "Pourcentage") +
+      ggplot2::scale_y_continuous(limits = c(0, max(.$pc_assec_usuelles) + 0.03), 
+                                  labels= scales::percent_format(1)) +
+      ggplot2::scale_x_continuous(breaks = scales::breaks_width(1)) +
+      ggplot2::labs(title = "Proportion moyenne annuelle des stations en assecs") +
+      ggplot2::theme_bw() +
+      ggplot2::theme(title = ggplot2::element_text(size = 9,face = 'bold'), 
+                     axis.text.x = ggplot2::element_text(size=9, angle = 45, hjust = 1),
+                     axis.text.y = ggplot2::element_text(size=9))
+  }
+
+partC <-
+## graph c)
+params$onde_df %>%
+  dplyr::filter(code_departement == params$code_departement) %>% 
+  calculer_recurrence_assecs(onde_df = .) %>% 
+  produire_graph_reccurrence_assecs(df_assecs = .)
+
+
+plot_historique <-
+  (partA/partB/partC) + 
+  patchwork::plot_layout(heights = c(1.7, 1.1, 2.3)) +
+  patchwork::plot_annotation(tag_levels = "a",tag_suffix = ')',
+                             #title = "Test",
+                             caption = paste("Source: réseau ONDE (OFB)\n ©OFB", 
+                                             format(Sys.time(), '%Y'), "- Date d'édition:",format(Sys.time(), '%d/%m/%Y'))) &
+  theme(plot.title = element_text(size = 8, face='bold'),
+        plot.tag = element_text(face = 'bold'))
+
+plot_historique
+```
 
 \newpage
 

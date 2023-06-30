@@ -52,6 +52,10 @@ utils::globalVariables(
     'NB',
     'frq',
     'Label_p',
-    'Mois_c'
+    'Label',
+    'Mois_c',
+    'libelle_station',
+    'max_nb_mois_assec',
+    'mois_assec_consec'
   )
 )
