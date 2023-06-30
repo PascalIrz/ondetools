@@ -56,6 +56,10 @@ utils::globalVariables(
     'Mois_c',
     'libelle_station',
     'max_nb_mois_assec',
-    'mois_assec_consec'
+    'mois_assec_consec',
+    'dpt',
+    'label_sta',
+    'modalite',
+    'onde_df_geo'
   )
 )

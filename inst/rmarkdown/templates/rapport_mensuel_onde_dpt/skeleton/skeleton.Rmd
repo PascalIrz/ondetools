@@ -330,7 +330,65 @@ plot_historique
 
 \newpage
 
-## Historique des observations par stations regroupées par bassins versants
+## Historique des observations par stations regroupées par Zones d'alerte Propluvia
+
+Ci-dessous les stations ONDE du département sont réparties selon les **zones d'alerte Propluvia** auxquelles elles appartiennent (noms issus des  [données Propluvia](https://www.data.gouv.fr/fr/datasets/donnee-secheresse-propluvia/)). Pour chaque station, l'historique retrace les observations des campagnes usuelles et complémentaires avec la **typologie départementale** définie précédemment. 
+
+```{r historique stations, results='asis', echo=FALSE, dpi=300, fig.height= 3.3, fig.width= 5.5, message=FALSE}
+onde_dpt <- 
+  params$onde_df %>% 
+  dplyr::filter(code_departement == params$code_departement) %>% 
+  dplyr::filter(etat_station == 'Active') %>% 
+  dplyr::mutate(
+    Annee = as.numeric(Annee),
+    Mois = format(as.Date(date_campagne), "%m"), 
+    Mois_campagne = lubridate::ym(paste0(Annee,Mois,sep="-"))
+  ) %>% 
+  dplyr::mutate(
+    lib_ecoul_dpt = dplyr::case_when(
+      libelle_ecoulement == 'Ecoulement visible' ~ 'Ecoulement visible acceptable',
+      TRUE ~ libelle_ecoulement
+    )
+  )
+
+onde_dpt_propluvia <-
+  ajouter_zones_propluvia(onde_df = onde_dpt,
+                          propluvia_shape = propluvia_zone)
+
+libelle_propluvia_dpt <- unique(onde_dpt_propluvia$libel)
+
+for (j in 1:length(libelle_propluvia_dpt)){
+  # section par zones d'alerte
+  cat("### Zones d'alerte: ", libelle_propluvia_dpt[j], "\n")
+  
+  zones_df <-
+  onde_dpt_propluvia %>% 
+    dplyr::filter(libel == libelle_propluvia_dpt[j])
+  
+  graphs_stations <- 
+  purrr::map(
+    .x = unique(zones_df$code_station), 
+    .f = produire_graph_pour_une_station_v2, 
+    type_mod = lib_ecoul_dpt,
+    onde_df = zones_df,
+    mod_levels = c("Assec", 
+                   "Ecoulement\nnon visible", 
+                   "Ecoulement\nvisible\nfaible", 
+                   "Ecoulement\nvisible\nacceptable", 
+                   "Observation\nimpossible", 
+                   "Donnée\nmanquante"),
+    mod_colors = onde_5mod
+  ) %>% 
+  purrr::set_names(unique(zones_df$code_station))
+  
+  walk(.x = graphs_stations, ~ print(.x))
+
+  # saut de page
+  cat('\n')
+  cat('\n')
+}
+
+```
 
 \newpage
 
