@@ -10,7 +10,6 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  echo = FALSE,
   eval = FALSE,
   collapse = TRUE,
   comment = "#>"
@@ -23,7 +22,7 @@ Les données ONDE sont mises à jour mensuellement et un rapport mensuel peut fa
 
 Pour cela, il faut télécharger au préalable les données ONDE avec la fonction `telecharger_donnees_onde_api()` sur un ensemble de départements. Dans l'exemple ci-dessous, les départements du *14*, *27* et *60* sont choisis. 
 
-```{r onde_data, echo=FALSE}
+```{r onde_data}
 library(ondetools)
 
 onde_df <- ondetools::telecharger_donnees_onde_api(dpt = c('14', '27', '60'))
@@ -38,7 +37,7 @@ Ensuite, il faut définir plusieurs paramètres qui seront utilisés pour la cr�
 - si le rapport voulu concerne un rapport pour une campagne complémentaire onde (avec l'argument `complementaire`) ;
 - et le dossier de sortie où le(s) rapport(s) sera(seront) créé(s) (avec l'argument `dossier_sortie`).
 
-```{r rapports, echo=FALSE}
+```{r rapports}
 produire_rapport_mensuel_dpt(
   onde_df = onde_df,
   code_departement = c('27','60'),
