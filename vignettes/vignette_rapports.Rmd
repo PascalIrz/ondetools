@@ -1,0 +1,51 @@
+---
+title: "Rapports mensuels ONDE"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Rapports mensuels ONDE}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  eval = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Créer un rapport départemental mensuel avec le package `ondetools`
+
+Les données ONDE sont mises à jour mensuellement et un rapport mensuel peut facilement être édité à l'échelle départemental, dont le contenu regroupe un ensemble d'informations.
+
+Pour cela, il faut télécharger au préalable les données ONDE avec la fonction `telecharger_donnees_onde_api()` sur un ensemble de départements. Dans l'exemple ci-dessous, les départements du *14*, *27* et *60* sont choisis. 
+
+```{r onde_data, echo=FALSE}
+library(ondetools)
+
+onde_df <- ondetools::telecharger_donnees_onde_api(dpt = c('14', '27', '60'))
+```
+
+Ensuite, il faut définir plusieurs paramètres qui seront utilisés pour la création du rapport :
+
+- les données onde à utiliser (avec l'argument `onde_df`) ;
+- les départements (avec l'argument `code_departement`) ;
+- le mois et l'année du rapport souhaité (avec l'argument `annee_mois` ; par exemple "2023-06" pour un rapport avec les données du mois de juin 2023) ;
+- le nom de la DR qui rédige le(s) rapport(s) (avec l'argument `region_dr`) ;
+- si le rapport voulu concerne un rapport pour une campagne complémentaire onde (avec l'argument `complementaire`) ;
+- et le dossier de sortie où le(s) rapport(s) sera(seront) créé(s) (avec l'argument `dossier_sortie`).
+
+```{r rapports, echo=FALSE}
+produire_rapport_mensuel_dpt(
+  onde_df = onde_df,
+  code_departement = c('27','60'),
+  annee_mois = "2023-06",
+  region_dr = 'Normandie',
+  complementaire = F,
+  dossier_sortie = "./OUTPUT"
+)
+```
+

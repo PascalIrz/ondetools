@@ -29,7 +29,7 @@ ajouter_zones_propluvia <- function(onde_df,
   propluvia_shape <-
     propluvia_shape %>%
     dplyr::filter(dpt %in% unique(onde_df$code_departement)) %>%
-    sf::st_transform(crs = st_crs(onde_df_geo)) %>%
+    sf::st_transform(crs = st_crs(onde_df)) %>%
     sf::st_buffer(dist = 50)
 
   sf::st_join(onde_df, propluvia_shape)
