@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 # Pourquoi ce *package* ?
 
-Le *package* `ondetools` vise à faciliter le chargement et l'exploitation des données de [l'observatoire des étiages](https://www.data.gouv.fr/fr/datasets/observatoire-national-des-etiages/) qui sont téléchargeables depuis [l'url suivante](https://onde.eaufrance.fr/content/t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e).
+Le *package* `ondetools` vise à faciliter le chargement et l'exploitation des données de [l'observatoire national des étiages - ONDE](https://www.data.gouv.fr/fr/datasets/observatoire-national-des-etiages/) qui sont téléchargeables depuis [l'url suivante](https://onde.eaufrance.fr/content/t%C3%A9l%C3%A9charger-les-donn%C3%A9es-des-campagnes-par-ann%C3%A9e).
 
 La logique suivie est celle d'une chaîne de traitements depuis le téléchargement des données brutes sur le web jusqu'à la visualisation cartographique.
 
@@ -62,7 +62,7 @@ D'autres *packages* sont nécessaires, non pas au fonctionnement de {ondetools},
 Téléchargement :
 
 ```{r, eval = FALSE}
-install.packages(c("lubridate", "mapview", "sf", "tidyverse"))
+install.packages(c("lubridate", "mapview", "sf", "dplyr", "stringr", "ggplot2"))
 ```
 
 Installation :
@@ -71,7 +71,9 @@ Installation :
 library(lubridate)
 library(mapview)
 library(sf) 
-library(tidyverse)
+library(dplyr)
+library(stringr)
+library(ggplot2)
 ```
 
 Chaque fonction est accompagnée d'un fichier d'aide. Exemple :
@@ -170,7 +172,7 @@ onde_lb_large <- passer_en_format_large(onde_df_long = onde)
 
 ## Exportation en format CSV
 
-On peut à ce stade exporter les tableaux de données en format texte directement lisible par Excel dans un répertoire "processed_data".
+On peut à ce stade exporter les tableaux de données en format texte directement lisible par Excel® dans un répertoire "processed_data".
 
 ```{r eval = FALSE}
 dir.create(file.path(subDir = 'processed_data'), showWarnings = FALSE)
@@ -196,7 +198,7 @@ ggplot(data = stations_onde_geo) + geom_sf()
 
 # Caractérisation des assecs estivaux
 
-Pour visualiser la fréquence des assecs sur le périmètre étudié, il est nécessaire d'agréger les données par station. Comme les efforts de collecte de données sont standardisés pour les campagnes "usuelles" (une observation par mois), tandis que les campagnes compléentaires varient fortement d'un département à un autre, seules les premières sont retenues.
+Pour visualiser la fréquence des assecs sur le périmètre étudié, il est nécessaire d'agréger les données par station. Comme les efforts de collecte de données sont standardisés pour les campagnes "usuelles" (une observation par mois), tandis que les campagnes complémentaires varient fortement d'un département à un autre, seules les premières sont retenues.
 
 ## Calcul
 
@@ -213,10 +215,10 @@ stations_onde_geo <- ajouter_donnees_assecs_aux_stations(stations_geo = stations
                                                          assecs_df = assecs)
 ```
 
-Si nécessaire, on peut reprojeter en WGS84 - le système utilisé par `OpenStreetMap` ou `GoogleMaps`.
+Si nécessaire, on peut reprojeter en WGS84 (crs 4326) - le système utilisé par `OpenStreetMap` ou `GoogleMaps`.
 
 ```{r eval = TRUE}
-stations_onde_geo <- st_transform(stations_onde_geo, crs = 27572)
+stations_onde_geo <- st_transform(stations_onde_geo, crs = 4326)
 ```
 
 ## Vérification visuelle
@@ -273,7 +275,7 @@ produire_graph_pour_une_station(code_station = ma_station, onde_df = onde_ts_moi
 
 ## Liste contenant tous les graphiques
 
-Le logiciel R permet la manipulation de nombreuses `classes` d'objets parmi lesquelles on trouve les `listes`. Une liste est un ensemble d'élements qui peuvent être de nature différente. Ici, nous allons créer une liste qui contiendra autant d'objets graphiques qu'il y a de stations.
+Le logiciel R permet la manipulation de nombreuses `classes` d'objets parmi lesquelles on trouve les `listes`. Une liste est un ensemble d'éléments qui peuvent être de nature différente. Ici, nous allons créer une liste qui contiendra autant d'objets graphiques qu'il y a de stations.
 
 La fonction `produire_graph_pour_toutes_les_stations()` est une "moulinette" qui permet d'appliquer la fonction de production du graphique (`produire_graph_pour_une_station()`) non pas à une station, mais à un ensemble.
 
@@ -328,7 +330,7 @@ unlink("raw_data", recursive=TRUE)
 
 
 
-blabla
+
 
 
 

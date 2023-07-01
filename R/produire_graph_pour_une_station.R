@@ -44,7 +44,7 @@ produire_graph_pour_une_station <- function(code_station, onde_df, couleurs){
                color = stringr::str_wrap(RsObservationNat, 12))) +
     geom_point(shape = 15, size = 12) +
     coord_flip() +
-    scale_color_manual(values = couleurs) +
+    scale_color_manual(values = couleurs, na.value = "grey") +
     scale_y_continuous(breaks = 1:12, labels = 1:12) +
     scale_x_continuous(breaks = min(prov$Annee, na.rm = T):max(prov$Annee, na.rm = T),
                        labels = min(prov$Annee, na.rm = T):max(prov$Annee, na.rm = T)) +

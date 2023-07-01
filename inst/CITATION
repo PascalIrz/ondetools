@@ -1,0 +1,27 @@
+year <- sub("-.*", "", meta$Date)
+version <- meta$Version
+note    <- sprintf("R package version %s", version)
+url     <- "https://github.com/PascalIrz/ondetools"
+title    <- "ondetools: Package R pour traiter les données ONDE de suivi des étiages en France"
+
+citHeader("To cite ondetools in publications use:")
+
+citEntry(
+  entry    = "Manual",
+  title    = title,
+  author   = personList(as.person("P. Irz")),
+  year     = year,
+  volume   = note,
+  url      = url,
+  textVersion = paste0(
+     "Irz, P. (",
+      year,
+     "). ",
+     title,
+     ". ",
+     note,
+     ", ",
+     "URL: ",
+     url
+                       )
+  )
