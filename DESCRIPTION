@@ -1,5 +1,5 @@
+Package: ondetools
 Type: Package
-<<<<<<< HEAD
 Title: Package R pour traiter les données ONDE de suivi des étiages en France
 Version: 0.1.2
 Date: 2023-03-31
@@ -16,46 +16,21 @@ Description: Le package propose un ensemble de fonctions facilitant l'exploitati
 License: GPL-3 + file LICENSE
 Imports: 
     cli,
-=======
-Package: ondetools
-Title: Package Pour Exploiter Les Données De La Base ONDE
-Version: 0.1.1
-Author: Pascal Irz
-Maintainer: Pascal Irz <pascal.irz@ofb.gouv.fr>
-Description: Le package propose un ensemble de fonctions facilitant
-    l'exploitation des données de l'Observatoire National des Etiages. En
-    particulier, il permet une chaîne de traitement comprenant
-    téléchargement, décompression et assemblage des fichiers annuels suivi
-    d'une visualisation des données associées à chaque station sur
-    cartographie dynamique.
-License: GPL-3
-Depends: 
-    R (>= 2.10)
-Imports: 
->>>>>>> master
     data.table,
     dplyr,
     forcats,
     furrr,
     ggplot2,
-<<<<<<< HEAD
     ggrepel,
     ggspatial,
     glue,
-    hubeau (>= 0.4.1),
-=======
-    glue,
     grDevices,
->>>>>>> master
+    hubeau (>= 0.4.1),
     leafpop,
     lubridate,
     magrittr,
     mapview,
-<<<<<<< HEAD
     progressr,
-=======
-    patchwork,
->>>>>>> master
     purrr,
     rlang,
     rmarkdown,
@@ -66,7 +41,6 @@ Imports:
     tidyr,
     utils,
     xml2
-<<<<<<< HEAD
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: bzip2
@@ -81,15 +55,3 @@ Depends:
     R (>= 2.10)
 Remotes: 
     inrae/hubeau
-=======
-Suggests: 
-    knitr,
-    rmarkdown,
-    tidyverse
-VignetteBuilder: 
-    knitr
-Config/testthat/edition: 3
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.2.0
->>>>>>> master
