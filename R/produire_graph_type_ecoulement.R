@@ -11,6 +11,7 @@
 #' @export
 #'
 #' @importFrom dplyr mutate filter ungroup
+#' @importFrom data.table rleid
 #' @importFrom forcats fct_rev
 #' @importFrom ggplot2 ggplot aes geom_bar facet_grid position_stack coord_flip ylab xlab labs scale_fill_manual theme_bw theme element_text element_rect element_line element_blank guides guide_legend
 #' @importFrom ggrepel geom_text_repel
@@ -137,6 +138,10 @@ produire_graph_type_ecoulement <- function(data_bilan,
       data_bilan %>%
       dplyr::ungroup() %>%
       dplyr::mutate(Mois_c = paste(Mois, substr(libelle_type_campagne,1,4),sep = "_")) %>%
+      dplyr::group_by(Mois_c) %>%
+      dplyr::mutate(campagne_factor = data.table::rleid(code_campagne),
+                    Mois_c = ifelse(campagne_factor == "1", Mois_c, paste0(Mois_c, campagne_factor))) %>%
+      dplyr::ungroup() %>%
       dplyr::filter(Annee == max(as.numeric(Annee)))
 
     data_bilan %>%

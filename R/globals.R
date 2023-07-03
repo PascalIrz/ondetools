@@ -54,6 +54,7 @@ utils::globalVariables(
     'Label_p',
     'Label',
     'Mois_c',
+    'campagne_factor',
     'libelle_station',
     'max_nb_mois_assec',
     'mois_assec_consec',

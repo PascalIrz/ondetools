@@ -227,6 +227,7 @@ indice_onde_tab %>%
   flextable::flextable() |> 
   flextable::separate_header() |> 
   #flextable::autofit() %>% 
+  flextable::width(width = 0.2) %>% 
   flextable::align(align = "center", part = "all") %>% 
   #flextable::colformat_double(digits = 1) %>% 
   flextable::bold(part = 'header', i = 1) %>% 
