@@ -227,14 +227,13 @@ indice_onde_tab %>%
   flextable::flextable() |> 
   flextable::separate_header() |> 
   #flextable::autofit() %>% 
-  flextable::width(width = 0.2) %>% 
   flextable::align(align = "center", part = "all") %>% 
   #flextable::colformat_double(digits = 1) %>% 
   flextable::bold(part = 'header', i = 1) %>% 
   flextable::bold(part = "body", j = 1) %>%
   flextable::italic(part = 'header', i = 2) %>% 
-  flextable::fontsize(size=9, part = c("all")) %>% 
-  flextable::width(width = 0.6) %>% 
+  flextable::fontsize(size=8.5, part = c("all")) %>% 
+  flextable::width(width = 0.5) %>% 
   flextable::border_inner_v(part="all", border = flextable::fp_border_default(color="gray", width = 1) )
 ```
 
