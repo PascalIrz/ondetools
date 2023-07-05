@@ -24,6 +24,7 @@ options(warn=-1)
 if(!require("tidyverse")) install.packages('tidyverse')
 if(!require("patchwork")) install.packages('patchwork')
 if(!require("flextable")) install.packages('flextable')
+if(!require("magick")) install.packages('magick')
 if(!require("COGiter")) devtools::install_github("MaelTheuliere/COGiter")
 ```
 

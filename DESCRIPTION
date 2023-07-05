@@ -48,10 +48,11 @@ RoxygenNote: 7.2.3
 Suggests: 
     knitr,
     flextable,
-    patchwork
+    patchwork,
+    magick
 VignetteBuilder: knitr
 URL: https://pascalirz.github.io/ondetools/
 Depends: 
     R (>= 2.10)
 Remotes: 
-    inrae/hubeau
+    MaelTheuliere/COGiter
