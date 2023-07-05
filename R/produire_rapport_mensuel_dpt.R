@@ -33,8 +33,8 @@
 #'                              complementaire = F,
 #'                              dossier_sortie = "./OUTPUT")
 #'
-#' Rapports pour plusieurs départements (ex: 14, 27, 76) pour des complémentaires
-#'   du mois de juin 2023 ('2023_06')
+#' ## Rapports pour plusieurs départements (ex: 14, 27, 76) pour des complémentaires
+#' ##  du mois de juin 2023 ('2023_06')
 #'
 #' produire_rapport_mensuel_dpt(onde_df = donnees_onde,
 #'                              code_departement = c('14', '27', '76'),

@@ -122,7 +122,8 @@ produire_carte_statique <- function(onde_df_mois = NULL,
                      lwd = 1.2) +
     ggplot2::geom_sf(
       data = sf::st_intersection(
-        sf::st_geometry(coursdeau_carthage_classe1a4),
+        sf::st_geometry(coursdeau_carthage_classe1a4 %>%
+                          sf::st_transform(crs = 2154)),
         sf::st_geometry(sf::st_as_sfc(sf::st_bbox(dpt_shp)) %>%
                           sf::st_buffer(dist =
                                           20000))
