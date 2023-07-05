@@ -54,5 +54,6 @@ VignetteBuilder: knitr
 URL: https://pascalirz.github.io/ondetools/
 Depends: 
     R (>= 2.10)
-Remotes: 
-    MaelTheuliere/COGiter
+Remotes:  
+    MaelTheuliere/COGiter,
+    inrae/hubeau
