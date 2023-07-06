@@ -97,7 +97,8 @@ onde_df_mois <-
 dptFR <-
   COGiter::departements_geo %>%
   dplyr::left_join(COGiter::departements %>%
-                     dplyr::select(DEP, REG, NOM_DEP))
+                     dplyr::select(DEP, REG, NOM_DEP)) %>% 
+  sf::st_transform(crs = 2154)
 
 
 ### tableau pour les bilans du type d'écoulement
