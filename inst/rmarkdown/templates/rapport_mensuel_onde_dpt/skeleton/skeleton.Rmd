@@ -43,7 +43,7 @@ Sur le terrain, la situation d'écoulement des cours d'eau est appréciée visue
 **: correspond à une station sur laquelle le lit mineur présente toujours de l'eau mais le débit est nul.
 -   **<span custom-style="Assec_style">Assec</span>**: correspond à une station à sec, où l'eau est totalement évaporée ou infiltrée sur plus de 50% de la station.
 
-Un autre modalité - **<span custom-style="Ecoul_visible_faible">Ecoulement visible faible</span>** - est parfois utilisée sur le terrain (distinction avec la modalité **<span custom-style="Ecoulement_style">Ecoulement visible acceptable</span>**). Elle apparaît dans la **typologie départementale** ; et correspond à une station sur laquelle il y a de l'eau et un courant visible, mais le débit faible ne garantit pas un fonctionnement biologique.
+Une autre modalité - **<span custom-style="Ecoul_visible_faible">Ecoulement visible faible</span>** - est parfois utilisée sur le terrain (distinction avec la modalité **<span custom-style="Ecoulement_style">Ecoulement visible acceptable</span>**). Elle apparaît dans la **typologie départementale** ; et correspond à une station sur laquelle il y a de l'eau et un courant visible, mais le débit faible ne garantit pas un fonctionnement biologique.
 
 A noter que la modalité **observation impossible** peut également être renseignée, dès lors que l'observation n'a pu être réalisée correctement en raison de conditions exceptionnelles (problèmes d'accessibilité, modification des conditions environnementales de la station, etc ...).
 
@@ -257,11 +257,13 @@ onde_bilan_ecoulement_historique <-
                                            "Observation impossible",
                                            "Donnée manquante"),
                             referentiel_onde = "Typologie départementale",
-                            force_complementaire = T)
+                            force_complementaire = T) %>% 
+  dplyr::mutate(Label_p = gsub(x = Label_p, '%', replacement = ''))
 
 produire_graph_type_ecoulement(data_bilan = onde_bilan_ecoulement_historique,
                                lib_ecoulement = lib_ecoul,
-                               historique = T)
+                               historique = T) +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, size = 7, hjust = 1))
 ```
 
 \newpage
