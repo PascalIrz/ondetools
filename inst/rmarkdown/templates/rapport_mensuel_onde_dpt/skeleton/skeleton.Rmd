@@ -52,6 +52,10 @@ Pour plus d'informations : [Lien réseau ONDE (http://onde.eaufrance.fr)](https:
 # Nombre de stations ONDE dans le département `r params$code_departement`
 
 ```{r, include=FALSE, echo=FALSE}
+## 
+onde_df <- onde_df %>% 
+  dplyr::mutate(code_campagne = as.numeric(code_campagne))
+
 ### prétraitement sur le département
 nb_stations <- params$onde_df %>% 
   dplyr::filter(code_departement == params$code_departement & libelle_type_campagne == 'usuelle') %>% 

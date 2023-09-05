@@ -109,7 +109,7 @@ produire_graph_type_ecoulement <- function(data_bilan,
                    "Assec" = "#d73027",
                    "Ecoulement non visible" = "#fe9929",
                    "Observation impossible" = "grey50",
-                   "Donn\u00e9e manquante" = 'grey')
+                   "Donn\\u00e9e manquante" = 'grey')
       ) +
       ggplot2::theme_bw() +
       ggplot2::theme(
@@ -183,7 +183,7 @@ produire_graph_type_ecoulement <- function(data_bilan,
                    "Assec" = "#d73027",
                    "Ecoulement non visible" = "#fe9929",
                    "Observation impossible" = "grey50",
-                   "Donn\u00e9e manquante" = 'grey')
+                   "Donn\\u00e9e manquante" = 'grey')
       ) +
       ggplot2::theme_bw() +
       ggplot2::theme(
