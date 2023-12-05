@@ -59,10 +59,10 @@ produire_graph_reccurrence_assecs <- function(df_assecs,
       "Dur\u00e9e",
       values = c(
         "1 mois" = "#FFFFB2FF",
-        "2 mois cons\\u00e9cutifs" = "#FECC5CFF",
-        "3 mois cons\\u00e9cutifs" = "#FD8D3CFF",
-        "4 mois cons\\u00e9cutifs" = "#F03B20FF",
-        "5 mois cons\\u00e9cutifs" = "#BD0026FF"
+        "2 mois cons\u00e9cutifs" = "#FECC5CFF",
+        "3 mois cons\u00e9cutifs" = "#FD8D3CFF",
+        "4 mois cons\u00e9cutifs" = "#F03B20FF",
+        "5 mois cons\u00e9cutifs" = "#BD0026FF"
       ),
       drop = FALSE
     ) +
