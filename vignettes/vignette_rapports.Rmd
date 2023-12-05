@@ -16,11 +16,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Créer un rapport départemental mensuel avec le package `ondetools`
+# Rapport départemental mensuel avec le package `ondetools`
 
-Les données ONDE sont mises à jour mensuellement et un rapport mensuel peut facilement être édité à l'échelle départemental, dont le contenu regroupe un ensemble d'informations.
+Les données ONDE sont mises à jour mensuellement et un rapport mensuel peut facilement être édité à l'échelle d'un département, dont le contenu regroupe un ensemble d'informations.
 
-Pour cela, il faut télécharger au préalable les données ONDE avec la fonction `telecharger_donnees_onde_api()` sur un ensemble de départements. Dans l'exemple ci-dessous, les départements du *14*, *27* et *60* sont choisis. 
+## Contenu du rapport
+
+Le rapport est un document au format `Microsoft Office Word` avec la charte graphique de l'établissement.
+
+<img src="../man/figures/rapport_page_garde.png" width="300">
+
+Dans le rapport, on retrouve :
+
+- un rappel sur le réseau ONDE (*informations générales, protocoles, ...*) ;
+- le nombre de stations dans le département et les dernières campagnes réalisées ; <img src="../man/figures/rapport_rappels.png" width="400">
+- la situation mensuelle départementale pour le mois en cours selon deux typologies (*nationale et départementale*) ; <img src="../man/figures/rapport_situation_mensuelle.png" width="400">
+- l'historicité sur le département (*variations de l'indice ONDE, des types d'écoulement, fréquence des assecs, ...*) ; <img src="../man/figures/rapport_historicite.png" width="400"> <img src="../man/figures/rapport_historicite_assecs.png" width="400">
+- le détail stations par stations regroupées par zones d'alerte Propluvia. <img src="../man/figures/rapport_details_stations.png" width="400">.
+
+## Procédure pour créer un(des) rapport(s) mensuel(s)
+
+Pour cela, il faut télécharger au préalable les données ONDE avec la fonction `telecharger_donnees_onde_api()` sur un ou plusieurs départements. Dans l'exemple ci-dessous, les départements du *14*, *27* et *60* sont choisis.
 
 ```{r onde_data}
 ## 1) Charger le package
@@ -29,21 +45,21 @@ library(ondetools)
 ## 2) Choisir ses départements
 mes_dpts <- c('14', '27', '60')
 
-## 2) Télécharger les données onde
+## 3) Télécharger les données onde
 onde_df <- telecharger_donnees_onde_api(dpt = mes_dpts)
 ```
 
 Ensuite, il faut définir plusieurs paramètres qui seront utilisés pour la création du rapport :
 
-- les données onde à utiliser (avec l'argument `onde_df`) ;
-- les départements (avec l'argument `code_departement`) ;
-- le mois et l'année du rapport souhaité (avec l'argument `annee_mois` ; par exemple "2023-06" pour un rapport avec les données du mois de juin 2023) ;
-- le nom de la DR qui rédige le(s) rapport(s) (avec l'argument `region_dr`) ;
-- si le rapport voulu concerne un rapport pour une campagne complémentaire onde (avec l'argument `complementaire`) ;
-- et le dossier de sortie où le(s) rapport(s) sera(seront) créé(s) (avec l'argument `dossier_sortie`).
+-   les données onde à utiliser (avec l'argument `onde_df`) ;
+-   les départements souhaités (avec l'argument `code_departement`) ;
+-   le mois et l'année du rapport voulu (avec l'argument `annee_mois`, par exemple *2023-06* pour un rapport avec les données du mois de *juin 2023*) (⚠ *le format est important)* ;
+-   le nom de la DR qui doit figurer sur le(s) rapport(s) (avec l'argument `region_dr`) ;
+-   si le rapport voulu concerne un rapport pour une campagne complémentaire ou non (avec l'argument `complementaire`) ;
+-   et le dossier de sortie où le(s) rapport(s) sera(seront) créé(s) (avec l'argument `dossier_sortie`).
 
 ```{r rapports}
-## 3) Produire le(s) rapport(s) 
+## 4) Produire le(s) rapport(s) 
 produire_rapport_mensuel_dpt(
   onde_df = onde_df,
   code_departement = mes_dpts,
@@ -53,4 +69,3 @@ produire_rapport_mensuel_dpt(
   dossier_sortie = "./OUTPUT"
 )
 ```
-
