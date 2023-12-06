@@ -12,6 +12,7 @@
 #' @return un graphique \code{ggplot2}
 #' @export
 #'
+#' @importFrom stats setNames
 #' @importFrom dplyr ungroup filter mutate
 #' @importFrom ggplot2 ggplot aes geom_bar geom_text position_stack scale_fill_manual scale_y_continuous labs theme_bw theme element_text element_blank ylab xlab
 #' @importFrom glue glue
@@ -28,6 +29,12 @@
 #' }
 produire_graph_reccurrence_assecs <- function(df_assecs,
                                               round_prec = 1) {
+
+  pal_col_duree <- setNames(
+    c("#FFFFB2FF", "#FECC5CFF", "#FD8D3CFF", "#F03B20FF", "#BD0026FF"),
+    c("1 mois", "2 mois cons\u00e9cutifs", "3 mois cons\u00e9cutifs", "4 mois cons\u00e9cutifs", "5 mois cons\u00e9cutifs")
+  )
+
   df_assecs %>%
     dplyr::ungroup() %>%
     tidyr::complete(Annee,
@@ -57,13 +64,14 @@ produire_graph_reccurrence_assecs <- function(df_assecs,
     ) +
     ggplot2::scale_fill_manual(
       "Dur\u00e9e",
-      values = c(
-        "1 mois" = "#FFFFB2FF",
-        "2 mois cons\u00e9cutifs" = "#FECC5CFF",
-        "3 mois cons\u00e9cutifs" = "#FD8D3CFF",
-        "4 mois cons\u00e9cutifs" = "#F03B20FF",
-        "5 mois cons\u00e9cutifs" = "#BD0026FF"
-      ),
+      values = pal_col_duree,
+      # values = c(
+      #   "1 mois" = "#FFFFB2FF",
+      #   "2 mois cons\u00e9cutifs" = "#FECC5CFF",
+      #   "3 mois cons\u00e9cutifs" = "#FD8D3CFF",
+      #   "4 mois cons\u00e9cutifs" = "#F03B20FF",
+      #   "5 mois cons\u00e9cutifs" = "#BD0026FF"
+      # ),
       drop = FALSE
     ) +
     ggplot2::scale_y_continuous(labels = scales::percent_format(round_prec)) +
