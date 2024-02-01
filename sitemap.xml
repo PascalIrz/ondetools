@@ -13,6 +13,9 @@
     <loc>https://pascalirz.github.io/ondetools/articles/vignette_ondetools.html</loc>
   </url>
   <url>
+    <loc>https://pascalirz.github.io/ondetools/articles/vignette_rapports.html</loc>
+  </url>
+  <url>
     <loc>https://pascalirz.github.io/ondetools/authors.html</loc>
   </url>
   <url>
@@ -22,13 +25,31 @@
     <loc>https://pascalirz.github.io/ondetools/reference/ajouter_donnees_assecs_aux_stations.html</loc>
   </url>
   <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/ajouter_zones_propluvia.html</loc>
+  </url>
+  <url>
     <loc>https://pascalirz.github.io/ondetools/reference/assembler_fichiers_onde_annuels_csv.html</loc>
   </url>
   <url>
     <loc>https://pascalirz.github.io/ondetools/reference/calculer_assecs_ete.html</loc>
   </url>
   <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/calculer_assecs_heatmap.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/calculer_bilan_ecoulement.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/calculer_indice_onde.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/calculer_recurrence_assecs.html</loc>
+  </url>
+  <url>
     <loc>https://pascalirz.github.io/ondetools/reference/completer_observations_mois_manquants.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/coursdeau_carthage_classe1a4.html</loc>
   </url>
   <url>
     <loc>https://pascalirz.github.io/ondetools/reference/creer_couche_geo_stations.html</loc>
@@ -49,16 +70,46 @@
     <loc>https://pascalirz.github.io/ondetools/reference/lire_couche_sages.html</loc>
   </url>
   <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/onde_4mod.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/onde_5mod.html</loc>
+  </url>
+  <url>
     <loc>https://pascalirz.github.io/ondetools/reference/passer_en_format_large.html</loc>
   </url>
   <url>
     <loc>https://pascalirz.github.io/ondetools/reference/produire_carte_dynamique.html</loc>
   </url>
   <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/produire_carte_statique.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/produire_graph_heatmap_assecs.html</loc>
+  </url>
+  <url>
     <loc>https://pascalirz.github.io/ondetools/reference/produire_graph_pour_toutes_les_stations.html</loc>
   </url>
   <url>
     <loc>https://pascalirz.github.io/ondetools/reference/produire_graph_pour_une_station.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/produire_graph_pour_une_station_v2.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/produire_graph_reccurrence_assecs.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/produire_graph_type_ecoulement.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/produire_rapport_mensuel_dpt.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/propluvia_zone.html</loc>
+  </url>
+  <url>
+    <loc>https://pascalirz.github.io/ondetools/reference/telecharger_donnees_onde_api.html</loc>
   </url>
   <url>
     <loc>https://pascalirz.github.io/ondetools/reference/telecharger_fichiers_onde_annuels.html</loc>

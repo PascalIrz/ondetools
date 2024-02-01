@@ -3,7 +3,8 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   vignette_ondetools: vignette_ondetools.html
-last_built: 2023-03-31T15:25Z
+  vignette_rapports: vignette_rapports.html
+last_built: 2024-02-01T16:57Z
 urls:
   reference: https://pascalirz.github.io/ondetools/reference
   article: https://pascalirz.github.io/ondetools/articles
