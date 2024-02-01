@@ -7,3 +7,7 @@
 Meta
 raw_data
 docs
+dev/dev_history_file.R
+inst/doc
+/doc/
+/Meta/
