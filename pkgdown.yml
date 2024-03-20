@@ -1,10 +1,10 @@
-pandoc: 2.19.2
+pandoc: 3.1.11
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   vignette_ondetools: vignette_ondetools.html
   vignette_rapports: vignette_rapports.html
-last_built: 2024-02-01T16:57Z
+last_built: 2024-03-20T13:57Z
 urls:
   reference: https://pascalirz.github.io/ondetools/reference
   article: https://pascalirz.github.io/ondetools/articles
